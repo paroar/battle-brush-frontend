@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 let ws = new WebSocket(`ws://localhost:8085/ws`)
 
 const WSContext = React.createContext({
-    webSocket: {} as WebSocket
+    webSocket: {} as WebSocket,
+    userID: ""
 });
 
 const WSContextProvider: React.FC = (props) => {
 
     const [isConnected, setIsConnected] = useState(false)
+    const [userID, setUserID] = useState("")
 
     ws.onclose = () => {
         console.log("ws closed");
@@ -30,14 +32,18 @@ const WSContextProvider: React.FC = (props) => {
     }
 
     ws.onmessage = (msg) => {
-        console.log(JSON.parse(msg.data))
+        const data = JSON.parse(msg.data)
+        if(data.type == "id"){
+            setUserID(data.content)
+        }
     }
 
     if (isConnected) {
         return (
             <WSContext.Provider
                 value={{
-                    webSocket: ws
+                    webSocket: ws,
+                    userID: userID
                 }}
             >
                 {props.children}
