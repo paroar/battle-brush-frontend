@@ -16,7 +16,6 @@ const Modal = (props: Props) => {
     return (
         <div className={`modal-${isModalVisible ? "visible" : "invisible"}`}>
             <div className="modal-content">
-                <Button type="primary" icon={<CloseOutlined />} onClick={() => setIsModalVisible(false)}></Button>
                 {props.children}
             </div>
         </div>

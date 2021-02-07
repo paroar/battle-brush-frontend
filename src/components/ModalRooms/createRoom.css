@@ -1,0 +1,17 @@
+.create-room{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 30px;
+}
+
+.create-room-field{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.create-room-input{
+    width: 50px;
+    border: 1px solid lightgray;
+}

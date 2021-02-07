@@ -1,17 +1,19 @@
 import { Spin } from 'antd';
-import React, { useState } from 'react';
+import React, { MutableRefObject, useRef, useState } from 'react';
 
 let ws = new WebSocket(`ws://localhost:8085/ws`)
 
 const WSContext = React.createContext({
     webSocket: {} as WebSocket,
-    userID: ""
+    userID: "",
+    roomRef: {} as MutableRefObject<string>
 });
 
 const WSContextProvider: React.FC = (props) => {
 
     const [isConnected, setIsConnected] = useState(false)
     const [userID, setUserID] = useState("")
+    const roomRef = useRef("")
 
     ws.onclose = () => {
         console.log("ws closed");
@@ -43,7 +45,8 @@ const WSContextProvider: React.FC = (props) => {
             <WSContext.Provider
                 value={{
                     webSocket: ws,
-                    userID: userID
+                    userID: userID,
+                    roomRef: roomRef
                 }}
             >
                 {props.children}

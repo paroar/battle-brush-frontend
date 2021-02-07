@@ -1,5 +1,5 @@
 import React from 'react'
-import { Canvas } from '../../components/canvas/canvas'
+import { Canvas } from '../../components/Canvas/canvas'
 import './room.css'
 
 const Room = () => {

@@ -1,25 +1,22 @@
-import React from 'react'
 import {
-    BrowserRouter as Router,
+    BrowserRouter,
     Switch,
     Route,
 } from "react-router-dom";
 
-import Lobby from '../pages/lobby/lobby';
+import Home from '../pages/home/home';
+import Lobby from "../pages/lobby/lobby";
 import Room from '../pages/room/room';
 
 const RouterNavigation = () => {
     return (
-        <Router>
+        <BrowserRouter>
             <Switch>
-                <Route path="/" exact>
-                    <Lobby />
-                </Route>
-                <Route path="/room" exact>
-                    <Room />
-                </Route>
+                <Route path="/" exact component={Home} />
+                <Route path="/lobby" exact component={Lobby} />
+                <Route path="/room" exact component={Room} />
             </Switch>
-        </Router>
+        </BrowserRouter>
     )
 }
 
