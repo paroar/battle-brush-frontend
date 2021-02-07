@@ -15,7 +15,7 @@ const Chat = () => {
 
     const handleMessages = () => {
         webSocket.send(JSON.stringify({ 
-            type: "msg",
+            type: "Chat",
             content: msg 
         }))
     }

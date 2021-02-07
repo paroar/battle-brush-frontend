@@ -27,7 +27,7 @@ const WSContextProvider: React.FC = (props) => {
     ws.onopen = () => {
         console.log("ws opened")
         ws.send(JSON.stringify({ 
-            type: "login",
+            type: "Login",
             content: "connected" 
         }))
         setIsConnected(true)
@@ -35,7 +35,7 @@ const WSContextProvider: React.FC = (props) => {
 
     ws.onmessage = (msg) => {
         const data = JSON.parse(msg.data)
-        if(data.type == "id"){
+        if(data.type == "Login"){
             setUserID(data.content)
         }
     }
