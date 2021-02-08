@@ -1,6 +1,26 @@
-.chat{
+.chat {
     height: 100%;
-    background-color: lightpink;
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
+}
+
+.chat-messages {
+    flex: 1;
+    background-color: lightsteelblue;
+    overflow-y: scroll;
+    word-wrap: break-word;
+}
+
+.chat-messages-text {
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+}
+
+.chat-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: lightskyblue;
 }

@@ -1,0 +1,25 @@
+.lobby{
+    background-color: lightgreen;
+    height: 100%;
+}
+
+.lobby-section{
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lobby-section-left{
+    flex: 1;
+}
+
+.lobby-section-right{
+    width: 400px;
+}
+
+.lobby-canvas{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}

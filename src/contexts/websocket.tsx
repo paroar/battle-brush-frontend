@@ -26,17 +26,19 @@ const WSContextProvider: React.FC = (props) => {
 
     ws.onopen = () => {
         console.log("ws opened")
-        ws.send(JSON.stringify({ 
+        ws.send(JSON.stringify({
             type: "Login",
-            content: "connected" 
+            content: {
+                userid: "connected"
+            }
         }))
         setIsConnected(true)
     }
 
     ws.onmessage = (msg) => {
         const data = JSON.parse(msg.data)
-        if(data.type == "Login"){
-            setUserID(data.content)
+        if (data.type == "Login") {
+            setUserID(data.content.userid)
         }
     }
 
@@ -57,9 +59,6 @@ const WSContextProvider: React.FC = (props) => {
             <Spin size="large" />
         )
     }
-
-
-
 }
 
 const WSContextConsumer = WSContext.Consumer;

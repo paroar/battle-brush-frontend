@@ -9,6 +9,7 @@ import Lobby from "../pages/lobby/lobby";
 import Room from '../pages/room/room';
 
 const RouterNavigation = () => {
+
     return (
         <BrowserRouter>
             <Switch>
