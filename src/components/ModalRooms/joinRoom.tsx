@@ -41,7 +41,7 @@ const JoinRoom = (props:Props) => {
     return (
         <div>
             <p>Join Room</p>
-            <input type="text" ref={inputRef} onChange={(e) => handleRoomID(e)}/>
+            <input type="password" ref={inputRef} onChange={(e) => handleRoomID(e)}/>
             <div className="create-room-field">
                 <button onClick={() => setIsModalVisible(false)}>Cancel</button>
                 <button onClick={() => joinRoom()}>Join</button>

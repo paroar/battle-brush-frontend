@@ -6,6 +6,7 @@ import "./lobby.css"
 type Msg = {
     msg?: string
     username: string
+    type: string
 }
 
 const Lobby = () => {
@@ -27,21 +28,27 @@ const Lobby = () => {
             const msg = data.content
             console.log("join",msg)
             const joinMsg: Msg = {
-                msg: "joined",
-                username: msg.userName
+                msg: "has joined",
+                username: msg.userName,
+                type: "join"
             }
             setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), joinMsg])
         }else if(data.type == "Chat"){
             const msg = data.content
             console.log("chat",msg)
-
-            setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), msg])
+            const chatMsg: Msg = {
+                msg: msg.msg,
+                username: msg.username,
+                type: "chat"
+            }
+            setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), chatMsg])
         }else if(data.type == "Leave"){
             const msg = data.content
             console.log("leave",msg)
             const leaveMsg: Msg = {
-                msg: "left",
-                username: msg.userName
+                msg: "has left",
+                username: msg.userName,
+                type: "leave"
             }
             setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), leaveMsg])
         }else if(data.type == "Players"){

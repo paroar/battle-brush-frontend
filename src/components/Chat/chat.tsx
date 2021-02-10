@@ -5,6 +5,7 @@ import "./chat.css"
 type Msg = {
     msg?: string
     username: string
+    type: string
 }
 
 type Props = {
@@ -12,9 +13,9 @@ type Props = {
 }
 
 
-const Chat = (props:Props) => {
+const Chat = (props: Props) => {
 
-    const {chatMessages} = props
+    const { chatMessages } = props
 
     const { userName, webSocket } = useContext(WSContext)
 
@@ -38,7 +39,7 @@ const Chat = (props:Props) => {
     const messagesEndRef = useRef<HTMLInputElement>(null)
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scroll({ top: messagesEndRef.current.scrollHeight, behavior: "auto" })
+        messagesEndRef.current?.scroll({ top: messagesEndRef.current.scrollHeight, behavior: "smooth" })
     }
 
     useEffect(() => {
@@ -49,14 +50,22 @@ const Chat = (props:Props) => {
         <div className="chat">
             <div className="chat-messages" ref={messagesEndRef}>
                 {chatMessages.map(t => (
-                    <div className="chat-messages-text">
-                        <p className={`chat-messages-text-username test ${t.username == userName ? 'chat-messages-text-username-same' : null}`}>{t.username}</p>
-                        <p>{t.msg}</p>
-                    </div>
+                    t.type != "chat"
+                        ?
+                        <div className="chat-messages-misc">
+                            <span>{t.username} {t.msg}</span>
+                        </div>
+                        :
+                        <div className={`chat-messages-wrapper ${t.username == userName ? 'message-out' : 'message-in'}`}>
+                            <div className={`message-box`}>
+                                <span className={`message-title ${t.username == userName ? 'message-title-hide' : 'message-in'}`}>{t.username}</span>
+                                <span>{t.msg}</span>
+                            </div>
+                        </div>
                 ))}
             </div>
             <div className="chat-input">
-                <input type="text" onChange={(e) => setMsg(e.target.value)} onKeyPress={(e) => handleMessages(e)} value={msg} placeholder="Write your message here"/>
+                <input type="text" onChange={(e) => setMsg(e.target.value)} onKeyPress={(e) => handleMessages(e)} value={msg} placeholder="Write your message here" />
             </div>
         </div>
     )
