@@ -13,8 +13,22 @@
 
 .chat-messages-text {
     background-color: white;
+    border-radius: 5px;
     padding: 10px;
     margin: 10px;
+}
+
+.chat-messages-text > p {
+    margin: 0;
+}
+
+.chat-messages-text-username {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.chat-messages-text-username-same{
+    text-align:right;
 }
 
 .chat-input {
@@ -24,3 +38,12 @@
     padding: 15px;
     background-color: lightskyblue;
 }
+
+.chat-input > input{
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 25px;
+    width: 100%;
+    border: 1px solid white;
+}
+

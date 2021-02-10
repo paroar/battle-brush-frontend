@@ -6,6 +6,7 @@ let ws = new WebSocket(`ws://localhost:8085/ws`)
 const WSContext = React.createContext({
     webSocket: {} as WebSocket,
     userID: "",
+    userName: "",
     roomRef: {} as MutableRefObject<string>
 });
 
@@ -13,6 +14,7 @@ const WSContextProvider: React.FC = (props) => {
 
     const [isConnected, setIsConnected] = useState(false)
     const [userID, setUserID] = useState("")
+    const [userName, setUserName] = useState("")
     const roomRef = useRef("")
 
     ws.onclose = () => {
@@ -39,6 +41,7 @@ const WSContextProvider: React.FC = (props) => {
         const data = JSON.parse(msg.data)
         if (data.type == "Login") {
             setUserID(data.content.userid)
+            setUserName(data.content.userName)
         }
     }
 
@@ -48,6 +51,7 @@ const WSContextProvider: React.FC = (props) => {
                 value={{
                     webSocket: ws,
                     userID: userID,
+                    userName: userName,
                     roomRef: roomRef
                 }}
             >

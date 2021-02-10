@@ -2,26 +2,23 @@ import { useContext, useState, useRef, useEffect } from "react"
 import { WSContext } from "../../contexts/websocket"
 import "./chat.css"
 
-const Chat = () => {
+type Msg = {
+    msg?: string
+    username: string
+}
 
-    const { webSocket } = useContext(WSContext)
+type Props = {
+    chatMessages: Msg[]
+}
 
-    const [chatMessages, setChatMessages] = useState<string[]>([])
+
+const Chat = (props:Props) => {
+
+    const {chatMessages} = props
+
+    const { userName, webSocket } = useContext(WSContext)
+
     const [msg, setMsg] = useState("")
-
-    webSocket.onmessage = (receivedMsg) => {
-        const data = JSON.parse(receivedMsg.data)
-        if (data.type == "Join"){
-            const msg = data.content.userid
-            setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), msg])
-        }else if(data.type == "Chat"){
-            const msg = data.content.msg
-            setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), msg])
-        }else if(data.type == "Leave"){
-            const msg = data.content.userid
-            setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), msg])
-        }
-    }
 
     const handleMessages = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const msgInput = msg.trim()
@@ -29,6 +26,7 @@ const Chat = () => {
             webSocket.send(JSON.stringify({
                 type: "Chat",
                 content: {
+                    username: userName,
                     msg: msg
                 }
             }))
@@ -40,7 +38,6 @@ const Chat = () => {
     const messagesEndRef = useRef<HTMLInputElement>(null)
 
     const scrollToBottom = () => {
-        console.log("Scrolling")
         messagesEndRef.current?.scroll({ top: messagesEndRef.current.scrollHeight, behavior: "auto" })
     }
 
@@ -52,11 +49,14 @@ const Chat = () => {
         <div className="chat">
             <div className="chat-messages" ref={messagesEndRef}>
                 {chatMessages.map(t => (
-                    <p className="chat-messages-text">{t}</p>
+                    <div className="chat-messages-text">
+                        <p className={`chat-messages-text-username test ${t.username == userName ? 'chat-messages-text-username-same' : null}`}>{t.username}</p>
+                        <p>{t.msg}</p>
+                    </div>
                 ))}
             </div>
             <div className="chat-input">
-                <input type="text" onChange={(e) => setMsg(e.target.value)} onKeyPress={(e) => handleMessages(e)} value={msg} />
+                <input type="text" onChange={(e) => setMsg(e.target.value)} onKeyPress={(e) => handleMessages(e)} value={msg} placeholder="Write your message here"/>
             </div>
         </div>
     )

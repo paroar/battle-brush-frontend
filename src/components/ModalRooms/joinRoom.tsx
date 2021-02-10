@@ -1,16 +1,19 @@
-import { useContext } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { RouteComponentProps, withRouter } from "react-router-dom"
 import { WSContext } from "../../contexts/websocket"
 
 interface Props extends RouteComponentProps {
+    isModalVisible: boolean
     setIsModalVisible: (b: boolean) => void
 }
 
 const JoinRoom = (props:Props) => {
 
-    const {setIsModalVisible} = props
+    const {isModalVisible, setIsModalVisible} = props
 
     const {userID, roomRef} = useContext(WSContext)
+
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const joinRoom = async () => {
         const url = "http://localhost:8085/joinroom"
@@ -31,10 +34,14 @@ const JoinRoom = (props:Props) => {
         console.log(roomRef.current)
     }
 
+    useEffect(() => {
+        inputRef.current?.select()
+    }, [isModalVisible])
+
     return (
         <div>
             <p>Join Room</p>
-            <input type="text" onChange={(e) => handleRoomID(e)}/>
+            <input type="text" ref={inputRef} onChange={(e) => handleRoomID(e)}/>
             <div className="create-room-field">
                 <button onClick={() => setIsModalVisible(false)}>Cancel</button>
                 <button onClick={() => joinRoom()}>Join</button>

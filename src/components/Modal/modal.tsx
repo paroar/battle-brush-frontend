@@ -1,5 +1,3 @@
-import { CloseOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
 import React from 'react'
 import "./modal.css"
 
