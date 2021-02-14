@@ -1,10 +1,9 @@
 import { useContext, useState } from "react"
-import { RouteComponentProps, withRouter } from "react-router-dom"
 import { WSContext } from "../../contexts/websocket"
 
 import "./createRoom.css"
 
-interface Props extends RouteComponentProps {
+interface Props {
     setIsModalVisible: (b: boolean) => void
 }
 
@@ -12,7 +11,7 @@ const CreateRoom = (props: Props) => {
 
     const {setIsModalVisible} = props
 
-    const { userID, roomRef } = useContext(WSContext)
+    const { userID, setRoom } = useContext(WSContext)
 
     const [numPlayers, setNumPlayers] = useState(6)
     const [time, setTime] = useState(90)
@@ -32,8 +31,7 @@ const CreateRoom = (props: Props) => {
         })
         if (res.ok){
             const data = await res.json()
-            roomRef.current = data.roomid
-            props.history.push("/lobby")
+            setRoom(data.roomid)
         }
     }
 
@@ -72,4 +70,4 @@ const CreateRoom = (props: Props) => {
     )
 }
 
-export default withRouter(CreateRoom)
+export default CreateRoom

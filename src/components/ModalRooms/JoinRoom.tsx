@@ -1,17 +1,18 @@
-import { useContext, useEffect, useRef } from "react"
-import { RouteComponentProps, withRouter } from "react-router-dom"
+import { useContext, useEffect, useRef, useState } from "react"
 import { WSContext } from "../../contexts/websocket"
 
-interface Props extends RouteComponentProps {
+interface Props {
     isModalVisible: boolean
     setIsModalVisible: (b: boolean) => void
 }
 
-const JoinRoom = (props:Props) => {
+const JoinRoom = (props: Props) => {
 
-    const {isModalVisible, setIsModalVisible} = props
+    const { isModalVisible, setIsModalVisible } = props
 
-    const {userID, roomRef} = useContext(WSContext)
+    const { userID, setRoom } = useContext(WSContext)
+
+    const [inputRoom, setInputRoom] = useState("")
 
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -21,27 +22,28 @@ const JoinRoom = (props:Props) => {
             method: "PATCH",
             body: JSON.stringify({
                 userid: userID,
-                roomid: roomRef.current,
+                roomid: inputRoom,
             })
         })
-        if (res.ok){
-            props.history.push("/lobby")
+        if (res.ok) {
+            setRoom(inputRoom)
         }
     }
 
-    const handleRoomID = (e:React.ChangeEvent<HTMLInputElement>) => {
-        roomRef.current = e.currentTarget.value
-        console.log(roomRef.current)
+    const handleRoomID = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputRoom(e.currentTarget.value)
     }
 
     useEffect(() => {
-        inputRef.current?.select()
+        if (isModalVisible) {
+            inputRef.current?.select()
+        }
     }, [isModalVisible])
 
     return (
         <div>
             <p>Join Room</p>
-            <input type="password" ref={inputRef} onChange={(e) => handleRoomID(e)}/>
+            <input type="password" ref={inputRef} onChange={(e) => handleRoomID(e)} />
             <div className="create-room-field">
                 <button onClick={() => setIsModalVisible(false)}>Cancel</button>
                 <button onClick={() => joinRoom()}>Join</button>
@@ -50,4 +52,4 @@ const JoinRoom = (props:Props) => {
     )
 }
 
-export default withRouter(JoinRoom)
+export default JoinRoom

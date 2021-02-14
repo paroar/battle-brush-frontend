@@ -3,13 +3,12 @@ import "./modal.css"
 
 type Props = {
     isModalVisible: boolean
-    setIsModalVisible: (_: boolean) => void
     children: React.ReactNode
 }
 
 const Modal = (props: Props) => {
 
-    const { isModalVisible, setIsModalVisible } = props
+    const { isModalVisible } = props
 
     return (
         <div className={`modal-${isModalVisible ? "visible" : "invisible"}`}>

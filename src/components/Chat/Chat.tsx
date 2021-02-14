@@ -1,12 +1,7 @@
 import { useContext, useState, useRef, useEffect } from "react"
 import { WSContext } from "../../contexts/websocket"
+import { Msg } from "../../types/types"
 import "./chat.css"
-
-type Msg = {
-    msg?: string
-    username: string
-    type: string
-}
 
 type Props = {
     chatMessages: Msg[]
