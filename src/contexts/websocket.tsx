@@ -10,8 +10,10 @@ const WSContext = React.createContext({
     userName: "",
     room: "",
     setRoom: (_: string) => {},
+    roomState: "",
+    setRoomState: (_: string) => {},
     players: [] as string[],
-    chatMessages: [] as Msg[]
+    chatMessages: [] as Msg[],
 });
 
 const WSContextProvider: React.FC = (props) => {
@@ -21,6 +23,7 @@ const WSContextProvider: React.FC = (props) => {
     const [room, setRoom] = useState("")
     const [chatMessages, setChatMessages] = useState<Msg[]>([])
     const [players, setPlayers] = useState<string[]>([])
+    const [roomState, setRoomState] = useState("")
 
     ws.onerror = (err) => {
         console.error(err)
@@ -71,6 +74,9 @@ const WSContextProvider: React.FC = (props) => {
         }else if(data.type == "Players"){
             const msg = data.content
             setPlayers(msg.userNames)
+        }else if(data.type == "GameState"){
+            const msg = data.content
+            setRoomState(msg.gameState)
         }
     }
 
@@ -83,8 +89,10 @@ const WSContextProvider: React.FC = (props) => {
                     userName: userName,
                     room: room,
                     setRoom: setRoom,
+                    roomState: roomState,
+                    setRoomState: setRoomState,
                     players: players,
-                    chatMessages: chatMessages
+                    chatMessages: chatMessages,
                 }}
             >
                 {props.children}
