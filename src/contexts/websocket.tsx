@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import React, { useState } from 'react';
-import { Msg } from '../types/types';
+import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing } from '../types/types';
 
 let ws = new WebSocket(`ws://localhost:8085/ws`)
 
@@ -9,11 +9,12 @@ const WSContext = React.createContext({
     userID: "",
     userName: "",
     room: "",
-    setRoom: (_: string) => {},
+    setRoom: (_: string) => { },
     roomState: "",
-    setRoomState: (_: string) => {},
+    setRoomState: (_: string) => { },
     players: [] as string[],
-    chatMessages: [] as Msg[],
+    chatMessages: [] as MsgChat[],
+    draw: ""
 });
 
 const WSContextProvider: React.FC = (props) => {
@@ -21,66 +22,73 @@ const WSContextProvider: React.FC = (props) => {
     const [userID, setUserID] = useState("")
     const [userName, setUserName] = useState("")
     const [room, setRoom] = useState("")
-    const [chatMessages, setChatMessages] = useState<Msg[]>([])
+    const [chatMessages, setChatMessages] = useState<MsgChat[]>([])
     const [players, setPlayers] = useState<string[]>([])
     const [roomState, setRoomState] = useState("")
+    const [draw, setDraw] = useState("")
 
     ws.onerror = (err) => {
         console.error(err)
     }
 
-    ws.onopen = () => {
-        ws.send(JSON.stringify({
-            type: "Login",
-            content: {
-                userid: "connected"
-            }
-        }))
-    }
-
     ws.onmessage = (receivedMsg) => {
-        const data = JSON.parse(receivedMsg.data)
-        if (data.type == "Login") {
-            setUserID(data.content.userid)
-            setUserName(data.content.userName)
-        }
-        else if (data.type == "Join"){
-            const msg = data.content
-            console.log("join",msg)
-            const joinMsg: Msg = {
-                msg: "has joined",
-                username: msg.userName,
-                type: "join"
+        const data: Message = JSON.parse(receivedMsg.data)
+        const type = data.type
+        const content = data.content
+        switch (type) {
+            case MessageType.Login: {
+                const { userid, username } = content as Login
+                setUserID(userid)
+                setUserName(username)
+                break
             }
-            setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), joinMsg])
-        }else if(data.type == "Chat"){
-            const msg = data.content
-            console.log("chat",msg)
-            const chatMsg: Msg = {
-                msg: msg.msg,
-                username: msg.username,
-                type: "chat"
+            case MessageType.JoinLeave: {
+                const { username, msg } = content as JoinLeave
+                const joinLeaveMsg: MsgChat = {
+                    msg: msg,
+                    username: username,
+                    type: MessageType.JoinLeave
+                }
+                setChatMessages([
+                    ...chatMessages.slice(Math.max(chatMessages.length - 50, 0)),
+                    joinLeaveMsg
+                ])
+                break
             }
-            setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), chatMsg])
-        }else if(data.type == "Leave"){
-            const msg = data.content
-            console.log("leave",msg)
-            const leaveMsg: Msg = {
-                msg: "has left",
-                username: msg.userName,
-                type: "leave"
+            case MessageType.Chat: {
+                const { username, msg } = content as Chat
+                const chatMsg: MsgChat = {
+                    msg: msg,
+                    username: username,
+                    type: MessageType.Chat
+                }
+                setChatMessages([
+                    ...chatMessages.slice(Math.max(chatMessages.length - 50, 0)),
+                    chatMsg
+                ])
+                break
             }
-            setChatMessages([...chatMessages.slice(Math.max(chatMessages.length - 50, 0)), leaveMsg])
-        }else if(data.type == "Players"){
-            const msg = data.content
-            setPlayers(msg.userNames)
-        }else if(data.type == "GameState"){
-            const msg = data.content
-            setRoomState(msg.gameState)
+            case MessageType.Image: {
+                const { img } = content as ImageDrawing
+                setDraw(img)
+                break
+            }
+            case MessageType.GameState: {
+                const { gameState } = content as State
+                setRoomState(gameState)
+                break
+            }
+            case MessageType.Players: {
+                const { usernames } = content as Players
+                setPlayers(usernames)
+                break
+            }
+            default:
+                console.error("Couldn't parse type ", data.type)
         }
     }
 
-    if (ws.readyState == 1) {
+    if (ws.readyState === 1) {
         return (
             <WSContext.Provider
                 value={{
@@ -93,6 +101,7 @@ const WSContextProvider: React.FC = (props) => {
                     setRoomState: setRoomState,
                     players: players,
                     chatMessages: chatMessages,
+                    draw: draw
                 }}
             >
                 {props.children}

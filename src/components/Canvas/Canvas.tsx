@@ -1,8 +1,11 @@
-
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import { WSContext } from "../../contexts/websocket";
+import { GameState, MessageType } from "../../types/types";
 import './canvas.css'
 
 export const Canvas: React.FC = () => {
+
+    const {webSocket, roomState, userID} = useContext(WSContext)
 
     const canvas = useRef<HTMLCanvasElement>(null)
     const ctx = useRef(canvas?.current?.getContext("2d"));
@@ -58,7 +61,18 @@ export const Canvas: React.FC = () => {
         }
       }, []);
 
-      
+      useEffect(() => {
+        if (roomState == GameState.Recolecting){
+          const imgString = canvas.current?.toDataURL()
+          webSocket.send(JSON.stringify({
+            type: MessageType.Image,
+            content: {
+                userid: userID,
+                img: imgString,
+            }
+        }))
+        }
+      }, [roomState])
 
     return (
         <canvas ref={canvas} className="canvas"/>

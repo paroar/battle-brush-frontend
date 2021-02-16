@@ -1,10 +1,10 @@
 import { useContext, useState, useRef, useEffect } from "react"
 import { WSContext } from "../../contexts/websocket"
-import { Msg } from "../../types/types"
+import { MessageType, MsgChat } from "../../types/types"
 import "./chat.css"
 
 type Props = {
-    chatMessages: Msg[]
+    chatMessages: MsgChat[]
 }
 
 
@@ -20,7 +20,7 @@ const Chat = (props: Props) => {
         const msgInput = msg.trim()
         if (e.key == "Enter" && msgInput.length > 0) {
             webSocket.send(JSON.stringify({
-                type: "Chat",
+                type: MessageType.Chat,
                 content: {
                     username: userName,
                     msg: msg
@@ -45,10 +45,10 @@ const Chat = (props: Props) => {
         <div className="chat">
             <div className="chat-messages" ref={messagesEndRef}>
                 {chatMessages.map(t => (
-                    t.type != "chat"
+                    t.type != MessageType.Chat
                         ?
                         <div className="chat-messages-misc">
-                            <span>{t.username} {t.msg}</span>
+                            <span>{t.msg}</span>
                         </div>
                         :
                         <div className={`chat-messages-wrapper ${t.username == userName ? 'message-out' : 'message-in'}`}>

@@ -23,3 +23,17 @@
     justify-content: center;
     align-items: center;
 }
+
+.container-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img{
+    background-color: white;
+}
+
+.players{
+    display: flex;
+    justify-content: space-around;
+}
