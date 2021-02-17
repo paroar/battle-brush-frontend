@@ -17,6 +17,7 @@ export enum MessageType {
     Players = "Players",
     GameState = "GameState",
     Image = "Image",
+    Vote = "Vote",
 }
 
 //GameStates Types
@@ -25,6 +26,7 @@ export enum GameState {
     Voting = "Voting",
     Recolecting = "Recolecting",
     Start = "Start",
+    Loading = "Loading",
 }
 
 //Message Content

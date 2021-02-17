@@ -37,3 +37,22 @@
     display: flex;
     justify-content: space-around;
 }
+
+.voting{
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.voting-img{
+    margin: 20px;
+    cursor: pointer;
+}
+
+.vote:hover{
+    cursor: pointer;
+}
+
+.hidden{
+    visibility: hidden;
+}

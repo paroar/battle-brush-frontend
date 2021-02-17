@@ -2,7 +2,7 @@ import { Spin } from 'antd';
 import React, { useState } from 'react';
 import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing } from '../types/types';
 
-let ws = new WebSocket(`ws://localhost:8085/ws`)
+let webSocket = new WebSocket(`ws://localhost:8085/ws`)
 
 const WSContext = React.createContext({
     webSocket: {} as WebSocket,
@@ -14,7 +14,8 @@ const WSContext = React.createContext({
     setRoomState: (_: string) => { },
     players: [] as string[],
     chatMessages: [] as MsgChat[],
-    draw: ""
+    draw: "",
+    setDraw: (_: string) => {}
 });
 
 const WSContextProvider: React.FC = (props) => {
@@ -27,11 +28,11 @@ const WSContextProvider: React.FC = (props) => {
     const [roomState, setRoomState] = useState("")
     const [draw, setDraw] = useState("")
 
-    ws.onerror = (err) => {
+    webSocket.onerror = (err) => {
         console.error(err)
     }
 
-    ws.onmessage = (receivedMsg) => {
+    webSocket.onmessage = (receivedMsg) => {
         const data: Message = JSON.parse(receivedMsg.data)
         const type = data.type
         const content = data.content
@@ -88,20 +89,21 @@ const WSContextProvider: React.FC = (props) => {
         }
     }
 
-    if (ws.readyState === 1) {
+    if (webSocket.readyState === 1) {
         return (
             <WSContext.Provider
                 value={{
-                    webSocket: ws,
-                    userID: userID,
-                    userName: userName,
-                    room: room,
-                    setRoom: setRoom,
-                    roomState: roomState,
-                    setRoomState: setRoomState,
-                    players: players,
-                    chatMessages: chatMessages,
-                    draw: draw
+                    webSocket,
+                    userID,
+                    userName,
+                    room,
+                    setRoom,
+                    roomState,
+                    setRoomState,
+                    players,
+                    chatMessages,
+                    draw,
+                    setDraw,
                 }}
             >
                 {props.children}
