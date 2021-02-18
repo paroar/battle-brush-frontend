@@ -1,18 +1,11 @@
 import { useContext, useState, useRef, useEffect } from "react"
 import { WSContext } from "../../contexts/websocket"
-import { MessageType, MsgChat } from "../../types/types"
+import { MessageType } from "../../types/types"
 import "./chat.css"
 
-type Props = {
-    chatMessages: MsgChat[]
-}
+const Chat = () => {
 
-
-const Chat = (props: Props) => {
-
-    const { chatMessages } = props
-
-    const { userName, webSocket } = useContext(WSContext)
+    const { userName, webSocket, chatMessages } = useContext(WSContext)
 
     const [msg, setMsg] = useState("")
 
@@ -28,7 +21,6 @@ const Chat = (props: Props) => {
             }))
             setMsg("")
         }
-
     }
 
     const messagesEndRef = useRef<HTMLInputElement>(null)
@@ -45,15 +37,15 @@ const Chat = (props: Props) => {
         <div className="chat">
             <div className="chat-messages" ref={messagesEndRef}>
                 {chatMessages.map(t => (
-                    t.type != MessageType.Chat
+                    t.type !== MessageType.Chat
                         ?
                         <div className="chat-messages-misc">
                             <span>{t.msg}</span>
                         </div>
                         :
-                        <div className={`chat-messages-wrapper ${t.username == userName ? 'message-out' : 'message-in'}`}>
+                        <div className={`chat-messages-wrapper ${t.username === userName ? 'message-out' : 'message-in'}`}>
                             <div className={`message-box`}>
-                                <span className={`message-title ${t.username == userName ? 'message-title-hide' : 'message-in'}`}>{t.username}</span>
+                                <span className={`message-title ${t.username === userName ? 'message-title-hide' : 'message-in'}`}>{t.username}</span>
                                 <span>{t.msg}</span>
                             </div>
                         </div>

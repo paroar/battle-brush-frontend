@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import React, { useState } from 'react';
-import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme } from '../types/types';
+import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme, GameState } from '../types/types';
 
 let webSocket = new WebSocket(`ws://localhost:8085/ws`)
 
@@ -83,6 +83,9 @@ const WSContextProvider: React.FC = (props) => {
             }
             case MessageType.GameState: {
                 const { gameState } = content as State
+                if (gameState === GameState.Waiting) {
+                    reset()
+                }
                 setRoomState(gameState)
                 break
             }
@@ -104,6 +107,19 @@ const WSContextProvider: React.FC = (props) => {
             default:
                 console.error("Couldn't parse type ", data.type)
         }
+    }
+
+    const reset = () => {
+        setDraw({
+            img: "",
+            userid: "",
+            username: ""
+        })
+        setWinner({
+            img: "",
+            username: ""
+        })
+        setTheme("")
     }
 
     if (webSocket.readyState === 1) {

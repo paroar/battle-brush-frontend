@@ -31,7 +31,8 @@ export enum GameState {
     RecolectingVotes = "RecolectingVotes",
     Start = "Start",
     Loading = "Loading",
-    Winner = "Winner"
+    Winner = "Winner",
+    Waiting = "Waiting"
 }
 
 //Message Content
