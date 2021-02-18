@@ -6,7 +6,7 @@ export type MsgChat = {
 
 export type Message = {
     type: string
-    content: Login | JoinLeave | Chat | Players | State | ImageDrawing;
+    content: Login | JoinLeave | Chat | Players | State | ImageDrawing | Theme;
 }
 
 //Message Types
@@ -18,15 +18,20 @@ export enum MessageType {
     GameState = "GameState",
     Image = "Image",
     Vote = "Vote",
+    Theme = "Theme",
+    Winner = "Winner",
 }
 
 //GameStates Types
+
 export enum GameState {
     Drawing = "Drawing",
     Voting = "Voting",
     Recolecting = "Recolecting",
+    RecolectingVotes = "RecolectingVotes",
     Start = "Start",
     Loading = "Loading",
+    Winner = "Winner"
 }
 
 //Message Content
@@ -57,4 +62,9 @@ export type State = {
 export type ImageDrawing = {
     userid: string
     img: string
+    username: string
+}
+
+export type Theme = {
+    theme: string
 }

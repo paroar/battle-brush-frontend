@@ -22,7 +22,8 @@ const Lobby = () => {
         roomState,
         webSocket,
         draw,
-        setDraw
+        theme,
+        winner
     } = useContext(WSContext)
 
     const [vote, setVote] = useState(3.5)
@@ -48,9 +49,16 @@ const Lobby = () => {
             type: MessageType.Vote,
             content: {
                 vote: vote,
+                userid: draw.userid
             }
         }))
     }
+
+    useEffect(() => {
+        if (roomState == GameState.RecolectingVotes) {
+            handleVote(vote)
+        }
+    }, [roomState])
 
     useEffect(() => {
         setVote(3.5)
@@ -61,7 +69,7 @@ const Lobby = () => {
             return (
                 <>
                     <div className={`container-img`}>
-                        <img alt="user drawing" className="img" src={`${draw}`} />
+                        <img alt="user drawing" className="img" src={draw.img} />
                     </div>
                     <div className="voting">
                         <div onClick={() => setVote(1)}>
@@ -85,12 +93,37 @@ const Lobby = () => {
                     </div>
                 </>
             )
-        } else if (roomState === GameState.Drawing || roomState === GameState.Recolecting) {
-            return <Canvas />
-        } else if (roomState === GameState.Loading) {
+        } else if (
+            roomState === GameState.Drawing ||
+            roomState === GameState.Recolecting
+        ) {
+            return (
+                <>
+                    <p>{theme}</p>
+                    <Canvas />
+                </>
+            )
+        } else if (
+            roomState === GameState.Loading ||
+            roomState === GameState.RecolectingVotes
+        ) {
             return <p>Loading</p>
+        } else if (roomState === GameState.Winner) {
+            return (
+                <>
+                    <p>{theme}</p>
+                    <h2>{winner.username}</h2>
+                    <div className={`container-img`}>
+                        <img alt="user drawing" className="img" src={winner.img} />
+                    </div>
+                </>
+            )
         } else {
-            return <button disabled={players.length < 2} onClick={() => handleStart()}>Start Game</button>
+            return (
+                <>
+
+                    <button disabled={players.length < 2} onClick={() => handleStart()}>Start Game</button>
+                </>)
         }
     }
 
@@ -107,6 +140,7 @@ const Lobby = () => {
                         ))}
                     </div>
                     <p>{vote}</p>
+                    <p>{roomState}</p>
                     {renderState()}
                 </div>
                 <div className="lobby-section-right">

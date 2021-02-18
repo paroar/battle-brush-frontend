@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import React, { useState } from 'react';
-import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing } from '../types/types';
+import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme } from '../types/types';
 
 let webSocket = new WebSocket(`ws://localhost:8085/ws`)
 
@@ -14,8 +14,9 @@ const WSContext = React.createContext({
     setRoomState: (_: string) => { },
     players: [] as string[],
     chatMessages: [] as MsgChat[],
-    draw: "",
-    setDraw: (_: string) => {}
+    draw: {} as ImageDrawing,
+    theme: "",
+    winner: { img: "", username: "" }
 });
 
 const WSContextProvider: React.FC = (props) => {
@@ -26,7 +27,13 @@ const WSContextProvider: React.FC = (props) => {
     const [chatMessages, setChatMessages] = useState<MsgChat[]>([])
     const [players, setPlayers] = useState<string[]>([])
     const [roomState, setRoomState] = useState("")
-    const [draw, setDraw] = useState("")
+    const [draw, setDraw] = useState<ImageDrawing>({
+        img: "",
+        userid: "",
+        username: ""
+    })
+    const [theme, setTheme] = useState("")
+    const [winner, setWinner] = useState({ img: "", username: "" })
 
     webSocket.onerror = (err) => {
         console.error(err)
@@ -70,8 +77,8 @@ const WSContextProvider: React.FC = (props) => {
                 break
             }
             case MessageType.Image: {
-                const { img } = content as ImageDrawing
-                setDraw(img)
+                const { img, username, userid } = content as ImageDrawing
+                setDraw({ img: img, username: username, userid: userid })
                 break
             }
             case MessageType.GameState: {
@@ -82,6 +89,16 @@ const WSContextProvider: React.FC = (props) => {
             case MessageType.Players: {
                 const { usernames } = content as Players
                 setPlayers(usernames)
+                break
+            }
+            case MessageType.Theme: {
+                const { theme } = content as Theme
+                setTheme(theme)
+                break
+            }
+            case MessageType.Winner: {
+                const { img, username } = content as ImageDrawing
+                setWinner({ img, username })
                 break
             }
             default:
@@ -103,7 +120,8 @@ const WSContextProvider: React.FC = (props) => {
                     players,
                     chatMessages,
                     draw,
-                    setDraw,
+                    theme,
+                    winner
                 }}
             >
                 {props.children}
