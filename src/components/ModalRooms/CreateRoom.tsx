@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import { WSContext } from "../../contexts/websocket"
+import { MessageType, RoomCommands } from "../../types/types"
 
 import "./createRoom.css"
 
@@ -11,7 +12,7 @@ const CreateRoom = (props: Props) => {
 
     const {setIsModalVisible} = props
 
-    const { userID, setRoom } = useContext(WSContext)
+    const { webSocket } = useContext(WSContext)
 
     const [numPlayers, setNumPlayers] = useState(6)
     const [time, setTime] = useState(90)
@@ -19,20 +20,12 @@ const CreateRoom = (props: Props) => {
 
 
     const createRoom = async () => {
-        const url = "http://localhost:8085/createroom"
-        const res = await fetch(url, {
-            method: "POST",
-            body: JSON.stringify({
-                userid: userID,
-                numPlayers: numPlayers,
-                time: time,
-                rounds: rounds
-            })
-        })
-        if (res.ok){
-            const data = await res.json()
-            setRoom(data.roomid)
-        }
+        webSocket.send(JSON.stringify({
+            type: MessageType.RoomCommand,
+            content: {
+                command: RoomCommands.Create,
+            }
+        }))
     }
 
     const handleNumPlayers = (e: React.ChangeEvent<HTMLInputElement>) => {

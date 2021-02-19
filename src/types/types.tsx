@@ -6,7 +6,7 @@ export type MsgChat = {
 
 export type Message = {
     type: string
-    content: Login | JoinLeave | Chat | Players | State | ImageDrawing | Theme;
+    content: Login | JoinLeave | Chat | Players | State | ImageDrawing | Theme | Connection | RoomCommand;
 }
 
 //Message Types
@@ -20,10 +20,11 @@ export enum MessageType {
     Vote = "Vote",
     Theme = "Theme",
     Winner = "Winner",
+    Connection = "Connection",
+    RoomCommand = "RoomCommand"
 }
 
 //GameStates Types
-
 export enum GameState {
     Drawing = "Drawing",
     Voting = "Voting",
@@ -33,6 +34,16 @@ export enum GameState {
     Loading = "Loading",
     Winner = "Winner",
     Waiting = "Waiting"
+}
+
+export enum RoomCommands {
+    Create = "Create",
+    JoinCreate = "JoinCreate"
+}
+
+export type RoomCommand = {
+    command: string
+	roomid:  string
 }
 
 //Message Content
@@ -68,4 +79,10 @@ export type ImageDrawing = {
 
 export type Theme = {
     theme: string
+}
+
+export type Connection = {
+    status: string
+    roomid: string
+    roomtype: string
 }

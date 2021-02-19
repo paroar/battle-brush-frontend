@@ -12,11 +12,20 @@ const UserInfo = () => {
         document.execCommand('copy');
     }
 
+    console.log(room.roomtype)
+
     return (
         <>
             <p>UserName: {userName}</p>
-            <input type="text" ref={roomClipboard} value={room} />
-            <button onClick={() => copyClipboard()}>Copy</button>
+            {room.roomtype === "Public"
+                ?
+                null
+                :
+                <>
+                    <input type="text" ref={roomClipboard} value={`http://localhost:3000/${room.roomid}`} />
+                    <button onClick={() => copyClipboard()}>Copy</button>
+                </>
+            }
         </>
     )
 }

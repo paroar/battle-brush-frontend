@@ -9,7 +9,7 @@ const Home = () => {
     const { room } = useContext(WSContext)
 
     return (
-        room ? <Lobby/> : <ChoiceRoom/>
+        room.roomid ? <Lobby/> : <ChoiceRoom/>
     )
 
 }

@@ -1,15 +1,15 @@
 import { Spin } from 'antd';
 import React, { useState } from 'react';
-import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme, GameState } from '../types/types';
+import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme, GameState, Connection, RoomCommand, RoomCommands } from '../types/types';
 
-let webSocket = new WebSocket(`ws://localhost:8085/ws`)
+const path = window.location.pathname
+let webSocket = new WebSocket(`ws://localhost:8085/ws${path !== "/" ? path : ""}`)
 
 const WSContext = React.createContext({
     webSocket: {} as WebSocket,
     userID: "",
     userName: "",
-    room: "",
-    setRoom: (_: string) => { },
+    room: { roomid: "", roomtype: "" },
     roomState: "",
     setRoomState: (_: string) => { },
     players: [] as string[],
@@ -23,7 +23,10 @@ const WSContextProvider: React.FC = (props) => {
 
     const [userID, setUserID] = useState("")
     const [userName, setUserName] = useState("")
-    const [room, setRoom] = useState("")
+    const [room, setRoom] = useState({
+        roomid: "",
+        roomtype: ""
+    })
     const [chatMessages, setChatMessages] = useState<MsgChat[]>([])
     const [players, setPlayers] = useState<string[]>([])
     const [roomState, setRoomState] = useState("")
@@ -104,6 +107,22 @@ const WSContextProvider: React.FC = (props) => {
                 setWinner({ img, username })
                 break
             }
+            case MessageType.Connection: {
+                const { status, roomid, roomtype } = content as Connection
+                if (status === "ok") {
+                    setRoom({ roomid: roomid, roomtype: roomtype })
+                }
+                break
+            }
+            case MessageType.RoomCommand: {
+                const { command, roomid } = content as RoomCommand
+                if (command === RoomCommands.JoinCreate) {
+                    setRoom({ roomid: roomid, roomtype: "Public" })
+                } else if (command === RoomCommands.Create) {
+                    setRoom({ roomid: roomid, roomtype: "Private" })
+                }
+                break
+            }
             default:
                 console.error("Couldn't parse type ", data.type)
         }
@@ -130,7 +149,6 @@ const WSContextProvider: React.FC = (props) => {
                     userID,
                     userName,
                     room,
-                    setRoom,
                     roomState,
                     setRoomState,
                     players,
