@@ -1,27 +1,26 @@
 export type MsgChat = {
     msg?: string
     username: string
-    type: string
+    type: number
 }
 
 export type Message = {
-    type: string
+    type: number
     content: Login | JoinLeave | Chat | Players | State | ImageDrawing | Theme | Connection | RoomCommand;
 }
 
 //Message Types
 export enum MessageType {
-    Login = "Login",
-    JoinLeave = "JoinLeave",
-    Chat = "Chat",
-    Players = "Players",
-    GameState = "GameState",
-    Image = "Image",
-    Vote = "Vote",
-    Theme = "Theme",
-    Winner = "Winner",
-    Connection = "Connection",
-    RoomCommand = "RoomCommand"
+    Login = 0,
+    JoinLeave = 1,
+    Chat = 2,
+    Players = 3,
+    GameState = 4,
+    Image = 5,
+    Theme = 6,
+    Vote = 7,
+    Winner = 8,
+    Connection = 9,
 }
 
 //GameStates Types

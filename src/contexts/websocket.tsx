@@ -10,6 +10,7 @@ const WSContext = React.createContext({
     userID: "",
     userName: "",
     room: { roomid: "", roomtype: "" },
+    setRoom: ({}: {roomid: string, roomtype: string} ) => {},
     roomState: "",
     setRoomState: (_: string) => { },
     players: [] as string[],
@@ -114,15 +115,6 @@ const WSContextProvider: React.FC = (props) => {
                 }
                 break
             }
-            case MessageType.RoomCommand: {
-                const { command, roomid } = content as RoomCommand
-                if (command === RoomCommands.JoinCreate) {
-                    setRoom({ roomid: roomid, roomtype: "Public" })
-                } else if (command === RoomCommands.Create) {
-                    setRoom({ roomid: roomid, roomtype: "Private" })
-                }
-                break
-            }
             default:
                 console.error("Couldn't parse type ", data.type)
         }
@@ -149,6 +141,7 @@ const WSContextProvider: React.FC = (props) => {
                     userID,
                     userName,
                     room,
+                    setRoom,
                     roomState,
                     setRoomState,
                     players,
