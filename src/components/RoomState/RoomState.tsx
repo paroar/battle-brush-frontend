@@ -13,17 +13,12 @@ const RoomState = () => {
     const {
         players,
         roomState,
-        webSocket,
+        room
     } = useContext(WSContext)
 
 
-    const handleStart = () => {
-        webSocket.send(JSON.stringify({
-            type: MessageType.GameState,
-            content: {
-                command: GameState.Start
-            }
-        }))
+    const handleStart = async () => {
+        fetch(`http://localhost:8085/startgame/${room.roomid}`)
     }
 
     const renderState = () => {
