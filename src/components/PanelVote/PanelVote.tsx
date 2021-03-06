@@ -20,13 +20,16 @@ const PanelVote = () => {
 
     useEffect(() => {
         if (roomState === GameState.RecolectingVotes) {
-            webSocket.send(JSON.stringify({
-                type: MessageType.Vote,
-                content: {
-                    vote: vote,
-                    userid: draw.userid
-                }
-            }))
+            fetch("http://localhost:8085/vote", {
+                method: "POST",
+                body: JSON.stringify({
+                    type: MessageType.Vote,
+                    content: {
+                        vote: vote,
+                        userid: draw.userid
+                    }
+                })
+            })
             console.log("RecolectingVotes")
         }
     }, [roomState])

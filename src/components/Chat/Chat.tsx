@@ -5,20 +5,22 @@ import "./chat.css"
 
 const Chat = () => {
 
-    const { userName, webSocket, chatMessages } = useContext(WSContext)
+    const { userID, userName, chatMessages, room } = useContext(WSContext)
 
     const [msg, setMsg] = useState("")
 
     const handleMessages = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const msgInput = msg.trim()
         if (e.key == "Enter" && msgInput.length > 0) {
-            webSocket.send(JSON.stringify({
-                type: MessageType.Chat,
-                content: {
+            fetch("http://localhost:8085/chat",{
+                method: "POST",
+                body: JSON.stringify({
+                    playerid: userID,
+                    roomid: room.roomid,
                     username: userName,
-                    msg: msg
-                }
-            }))
+                    msg: msg,
+                })
+            })
             setMsg("")
         }
     }
