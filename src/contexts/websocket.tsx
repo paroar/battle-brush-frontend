@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 import React, { useState } from 'react';
-import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme, GameState, Connection, RoomCommand, RoomCommands } from '../types/types';
+import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme, GameState, Connection, RoomCommand, RoomCommands, Winner } from '../types/types';
 
 const path = window.location.pathname
 let webSocket = new WebSocket(`ws://localhost:8085/ws${path !== "/" ? path : ""}`)
@@ -34,7 +34,6 @@ const WSContextProvider: React.FC = (props) => {
     const [draw, setDraw] = useState<ImageDrawing>({
         img: "",
         userid: "",
-        username: ""
     })
     const [theme, setTheme] = useState("")
     const [winner, setWinner] = useState({ img: "", username: "" })
@@ -81,8 +80,8 @@ const WSContextProvider: React.FC = (props) => {
                 break
             }
             case MessageType.Image: {
-                const { img, username, userid } = content as ImageDrawing
-                setDraw({ img: img, username: username, userid: userid })
+                const { img, userid } = content as ImageDrawing
+                setDraw({ img: img, userid: userid })
                 break
             }
             case MessageType.GameState: {
@@ -104,7 +103,7 @@ const WSContextProvider: React.FC = (props) => {
                 break
             }
             case MessageType.Winner: {
-                const { img, username } = content as ImageDrawing
+                const { img, username } = content as Winner
                 setWinner({ img, username })
                 break
             }
@@ -124,7 +123,6 @@ const WSContextProvider: React.FC = (props) => {
         setDraw({
             img: "",
             userid: "",
-            username: ""
         })
         setWinner({
             img: "",

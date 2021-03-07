@@ -6,13 +6,12 @@ import great from "../../assets/great.png"
 import love from "../../assets/love.png"
 import unicorn from "../../assets/unicorn.png"
 import { WSContext } from '../../contexts/websocket'
-import { GameState, MessageType } from '../../types/types'
+import { GameState } from '../../types/types'
 
 const PanelVote = () => {
 
     const {
         roomState,
-        webSocket,
         draw,
     } = useContext(WSContext)
 
@@ -23,14 +22,10 @@ const PanelVote = () => {
             fetch("http://localhost:8085/vote", {
                 method: "POST",
                 body: JSON.stringify({
-                    type: MessageType.Vote,
-                    content: {
-                        vote: vote,
-                        userid: draw.userid
-                    }
+                    playerid: draw.userid,
+                    vote: vote,
                 })
             })
-            console.log("RecolectingVotes")
         }
     }, [roomState])
 
