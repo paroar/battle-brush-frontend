@@ -7,3 +7,6 @@ html, body {
 html, body, #root, .App {
     height: 100%;
   }
+
+@import './components/ChoiceRoom/choiceRoom.scss';
+@import './components/Btn/btn.scss';
