@@ -1,4 +1,3 @@
-import { Spin } from 'antd';
 import React, { useState } from 'react';
 import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme, GameState, Connection, RoomCommand, RoomCommands, Winner } from '../types/types';
 
@@ -154,7 +153,7 @@ const WSContextProvider: React.FC = (props) => {
         )
     } else {
         return (
-            <Spin size="large" />
+            <div>Waiting</div>
         )
     }
 }
