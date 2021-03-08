@@ -3,7 +3,14 @@ import { WSContext } from "../../contexts/websocket";
 import { GameState } from "../../types/types";
 import './canvas.css'
 
-export const Canvas: React.FC = () => {
+type Props = {
+  width: number
+  height: number
+}
+
+const Canvas = (props: Props) => {
+
+  const { width, height } = props
 
   const { roomState, userID, room } = useContext(WSContext)
 
@@ -15,25 +22,34 @@ export const Canvas: React.FC = () => {
 
   const isDrawing = useRef(false)
 
-  const drawOnCanvas = (event: MouseEvent) => {
+  const drawOnCanvas = (e: MouseEvent) => {
     if (!ctx || !ctx.current) {
       return;
     }
     if (isDrawing.current) {
       ctx.current.beginPath();
       ctx.current.moveTo(lastX.current, lastY.current);
-      ctx.current.lineTo(event.offsetX, event.offsetY);
+      ctx.current.lineTo(e.offsetX, e.offsetY);
       ctx.current.stroke();
     }
 
-    [lastX.current, lastY.current] = [event.offsetX, event.offsetY];
+    [lastX.current, lastY.current] = getMousePos(canvas, e);
   }
 
   const handleMouseDown = (e: MouseEvent) => {
     isDrawing.current = true;
-    [lastX.current, lastY.current] = [e.offsetX, e.offsetY];
+    [lastX.current, lastY.current] = getMousePos(canvas, e);
   }
 
+  function getMousePos(canvas: React.RefObject<HTMLCanvasElement>, e: MouseEvent) {
+    var rect = canvas.current?.getBoundingClientRect();
+    const mousePos = [
+      Math.round((e.clientX - rect!.left) / (rect!.right - rect!.left) * canvas.current!.width),
+      Math.round((e.clientY - rect!.top) / (rect!.bottom - rect!.top) * canvas.current!.height)
+    ]
+    console.log(mousePos)
+    return mousePos
+  }
 
   const stopDrawing = () => {
     isDrawing.current = false;
@@ -67,15 +83,19 @@ export const Canvas: React.FC = () => {
       fetch("http://localhost:8085/img", {
         method: "POST",
         body: JSON.stringify({
-            playerid: userID,
-            roomid: room.roomid,
-            img: imgString,
+          playerid: userID,
+          roomid: room.roomid,
+          img: imgString,
         })
       })
     }
   }, [roomState])
 
   return (
-    <canvas ref={canvas} className="canvas" />
+    <div>
+      < canvas width={width} height={height} ref={canvas} className="canvas" />
+    </div>
   )
 };
+
+export default Canvas
