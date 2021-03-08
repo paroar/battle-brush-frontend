@@ -1,0 +1,28 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+        text-transform: uppercase;
+        font-size: 5rem;
+        font-family: "Avocados";
+        margin: 4rem 0rem 1rem 0rem;
+    }
+
+    .svg {
+        width: 60%;
+        max-height: 50rem;
+        max-width: 50rem;
+        margin: 2rem;
+    }
+
+    .contact {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        max-width: 20rem;
+        margin: 2rem;
+        color: rgb(139, 139, 139);
+    }
+}
