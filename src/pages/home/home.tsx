@@ -16,7 +16,7 @@ const Home = () => {
                 <h1 className="title">what the f*** is that</h1>
                 <img className="svg" src={main} />
                 <ChoiceRoom />
-                <span className="contact">Want to add your draw to the front page? Contact me at <a href="">email</a></span>
+                <span className="contact">Want to add your drawing to the front page? Contact me at <a href="">email</a></span>
             </section>
         )
     }
