@@ -92,7 +92,7 @@ const Canvas = (props: Props) => {
   }, [roomState])
 
   return (
-    <div>
+    <div className="canvas-container">
       < canvas width={width} height={height} ref={canvas} className="canvas" />
     </div>
   )
