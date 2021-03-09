@@ -12,11 +12,9 @@ const UserInfo = () => {
         document.execCommand('copy');
     }
 
-    console.log(room.roomtype)
-
     return (
-        <>
-            <p>UserName: {userName}</p>
+        <div className="user-info">
+            <span>{userName}</span>
             {room.roomtype === "Public"
                 ?
                 null
@@ -26,7 +24,7 @@ const UserInfo = () => {
                     <button onClick={() => copyClipboard()}>Copy</button>
                 </>
             }
-        </>
+        </div>
     )
 }
 
