@@ -1,0 +1,24 @@
+.badge {
+    text-transform: uppercase;
+    font-size: medium;
+    font-weight: bolder;
+    color: white;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin: 2rem 0.5rem;
+    background-color: rgb(194, 0, 0);
+    box-shadow: -0.3rem 0.3rem 0rem rgb(88, 0, 0);
+    align-self: center;
+}
+
+.badge:hover {
+    background-color: rgb(194, 0, 0);
+    box-shadow: -0.3rem 0.3rem 0rem rgb(88, 0, 0);
+
+    color: white;
+}
+
+.badge:active {
+    box-shadow: none;
+    transform: translate(-0.3rem, 0.3rem);
+}

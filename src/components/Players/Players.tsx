@@ -1,17 +1,16 @@
 import { useContext } from 'react'
 import { WSContext } from '../../contexts/websocket'
+import Badge from '../Badge/Badge'
 
 const Players = () => {
 
-    const { players } = useContext(WSContext)
+    const { players, userID, userName } = useContext(WSContext)
 
     return (
         <div className="players">
-            {players.data.map(p => (
-                <>
-                    <span>{p.name}</span>
-                    <span>{p.id}</span>
-                </>
+            <Badge text={userName} handler={() => console.log()}/>
+            {players.data.filter(p => p.id != userID).map(p => (
+                <Badge key={p.id} text={p.name} handler={() => console.log(p.id)} />
             ))}
         </div>
     )
