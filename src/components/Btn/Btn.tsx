@@ -4,7 +4,14 @@ type Props = {
 }
 
 const Btn = (props: Props) => {
-    return <div className="btn" onClick={() => props.handler()}>{props.text}</div>
+
+    const {handler, text} = props
+
+    return (
+        <div className="btn" onClick={() => handler()}>
+            <span>{text}</span>
+        </div>
+    )
 }
 
 export default Btn
