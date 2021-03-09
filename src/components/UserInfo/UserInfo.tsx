@@ -12,20 +12,16 @@ const UserInfo = () => {
         document.execCommand('copy');
     }
 
-    return (
-        <div className="user-info">
-            <span>{userName}</span>
-            {room.roomtype === "Public"
-                ?
-                null
-                :
-                <>
-                    <input type="text" ref={roomClipboard} value={`http://localhost:3000/${room.roomid}`} />
-                    <button onClick={() => copyClipboard()}>Copy</button>
-                </>
-            }
-        </div>
-    )
+    if (room.roomtype == "Private") {
+        return (
+            <div className="user-info">
+                <input type="text" ref={roomClipboard} value={`http://localhost:3000/${room.roomid}`} />
+                <button onClick={() => copyClipboard()}>Copy</button>
+            </div>
+        )
+    }else {
+        return null
+    }
 }
 
 export default UserInfo
