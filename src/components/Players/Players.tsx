@@ -7,8 +7,11 @@ const Players = () => {
 
     return (
         <div className="players">
-            {players?.map(p => (
-                <p>{p}</p>
+            {players.data.map(p => (
+                <>
+                    <span>{p.name}</span>
+                    <span>{p.id}</span>
+                </>
             ))}
         </div>
     )

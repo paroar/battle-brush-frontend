@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MsgChat, MessageType, Message, Login, Chat, State, Players, JoinLeave, ImageDrawing, Theme, GameState, Connection, RoomCommand, RoomCommands, Winner } from '../types/types';
+import { MsgChat, MessageType, Message, Login, Chat, State, JoinLeave, ImageDrawing, Theme, GameState, Connection, Winner, Players } from '../types/types';
 
 const path = window.location.pathname
 let webSocket = new WebSocket(`ws://localhost:8085/ws${path !== "/" ? path : ""}`)
@@ -9,10 +9,10 @@ const WSContext = React.createContext({
     userID: "",
     userName: "",
     room: { roomid: "", roomtype: "" },
-    setRoom: ({}: {roomid: string, roomtype: string} ) => {},
+    setRoom: ({ }: { roomid: string, roomtype: string }) => { },
     roomState: "",
-    setRoomState: (_: string) => { },
-    players: [] as string[],
+    setRoomState: (_: GameState) => { },
+    players: {} as Players,
     chatMessages: [] as MsgChat[],
     draw: {} as ImageDrawing,
     theme: "",
@@ -28,8 +28,10 @@ const WSContextProvider: React.FC = (props) => {
         roomtype: ""
     })
     const [chatMessages, setChatMessages] = useState<MsgChat[]>([])
-    const [players, setPlayers] = useState<string[]>([])
-    const [roomState, setRoomState] = useState("")
+    const [players, setPlayers] = useState<Players>({
+        data: []
+    })
+    const [roomState, setRoomState] = useState<GameState>(GameState.Waiting)
     const [draw, setDraw] = useState<ImageDrawing>({
         img: "",
         userid: "",
@@ -92,8 +94,8 @@ const WSContextProvider: React.FC = (props) => {
                 break
             }
             case MessageType.Players: {
-                const { usernames } = content as Players
-                setPlayers(usernames)
+                const players = content as Players
+                setPlayers(players)
                 break
             }
             case MessageType.Theme: {

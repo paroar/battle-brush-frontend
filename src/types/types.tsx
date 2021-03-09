@@ -63,12 +63,18 @@ export type Chat = {
 	msg:      string
 }
 
+export type Player = {
+    id: string
+    name: string
+    roomid: string
+}
+
 export type Players = {
-    usernames: string[]
+    data: Player[]
 }
 
 export type State = {
-    gameState: string
+    gameState: GameState
 }
 
 export type ImageDrawing = {
