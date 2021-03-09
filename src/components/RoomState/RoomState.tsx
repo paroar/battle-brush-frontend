@@ -33,8 +33,8 @@ const RoomState = () => {
 
     return (
         <>
-            <Theme />
             {renderState()}
+            <Theme />
         </>
     )
 }
