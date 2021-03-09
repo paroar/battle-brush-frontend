@@ -32,7 +32,7 @@ const ChoiceRoom = () => {
     return (
         <div className="choice-room">
             <Btn text="Play" handler={() => createOrJoinRoom()}/>
-            <Btn text="Create Room" handler={() => () => createRoom()}/>
+            <Btn text="Create Room" handler={() => createRoom()}/>
         </div>
     )
 }
