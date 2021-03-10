@@ -2,18 +2,12 @@
     text-transform: uppercase;
     font-size: x-large;
     font-weight: bolder;
-    color: white;
     padding: 0.5rem 2rem;
-    background-color: rgb(255, 217, 0);
     cursor: pointer;
     margin: 2rem;
-    box-shadow: -0.3rem 0.3rem 0rem rgb(92, 67, 0);
+    background-color: $medium-grey;
+    box-shadow: -0.3rem 0.3rem 0rem $dark-grey;
     align-self: center;
-}
-
-.btn:hover {
-    background-color: rgb(255, 196, 0);
-    color: rgb(92, 67, 0);
 }
 
 .btn:active {

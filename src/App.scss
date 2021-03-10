@@ -9,6 +9,10 @@
   src: url('./assets/Avocados.ttf');
 }
 
+$light-grey: #F8F9FA;
+$medium-grey: #ADB5BD;
+$dark-grey: #212529;
+
 @import './pages/home/home.scss';
 @import './components/ChoiceRoom/choiceRoom.scss';
 @import './components/Btn/btn.scss';
