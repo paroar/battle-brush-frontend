@@ -35,7 +35,7 @@ const PanelVote = () => {
 
     return (
         <>
-            <div className={`container-img`}>
+            <div className="container-img  canvas-container">
                 <img alt="user drawing" className="img" src={draw.img} />
             </div>
             <div className="voting">

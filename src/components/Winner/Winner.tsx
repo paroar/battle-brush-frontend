@@ -1,20 +1,19 @@
 import { useContext } from 'react'
 import { WSContext } from '../../contexts/websocket'
+import Theme from '../Theme/Theme'
 
 const Winner = () => {
 
     const {
-        theme,
         winner
     } = useContext(WSContext)
-    
+
     return (
         <>
-            <p>{theme}</p>
-            <h2>{winner.username}</h2>
-            <div className={`container-img`}>
+            <div className="canvas-container" >
                 <img alt="user drawing" className="img" src={winner.img} />
             </div>
+            <Theme>: by {winner.username}</Theme>
         </>
     )
 }

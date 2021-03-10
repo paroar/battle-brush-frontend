@@ -3,7 +3,7 @@ import { WSContext } from '../../contexts/websocket'
 
 const UserInfo = () => {
 
-    const { userName, room } = useContext(WSContext)
+    const { room } = useContext(WSContext)
 
     const roomClipboard = useRef<HTMLInputElement>(null)
 

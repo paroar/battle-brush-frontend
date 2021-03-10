@@ -1,5 +1,5 @@
 type Props = {
-    handler: () => {}
+    handler: () => void
     text: string
 }
 

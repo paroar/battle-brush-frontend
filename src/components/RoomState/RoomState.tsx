@@ -6,6 +6,7 @@ import { GameState } from "../../types/types"
 import PanelVote from "../PanelVote/PanelVote"
 import Winner from "../Winner/Winner"
 import Theme from "../Theme/Theme"
+import Skeleton from "react-loading-skeleton"
 
 const RoomState = () => {
 
@@ -21,9 +22,14 @@ const RoomState = () => {
                 return <PanelVote />
             case GameState.Drawing:
             case GameState.Recolecting:
-                return <Canvas width={864} height={540} />
+                return (
+                    <>
+                        <Canvas width={864} height={540} />
+                        <span>Draw a <Theme /></span>
+                    </>
+                )
             case GameState.Loading:
-                return <p>Loading</p>
+                return <Skeleton className="canvas-container" width={864} height={540} />
             case GameState.Winner:
                 return <Winner />
             default:
@@ -34,7 +40,6 @@ const RoomState = () => {
     return (
         <>
             {renderState()}
-            <Theme />
         </>
     )
 }
