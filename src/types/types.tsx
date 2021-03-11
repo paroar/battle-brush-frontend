@@ -25,12 +25,15 @@ export enum MessageType {
 //GameStates Types
 export enum GameState {
     Drawing = "Drawing",
+    LoadingDrawing = "LoadingDrawing",
     Voting = "Voting",
+    LoadingVoting = "LoadingVoting",
     Recolecting = "Recolecting",
     RecolectingVotes = "RecolectingVotes",
     Start = "Start",
     Loading = "Loading",
     Winner = "Winner",
+    LoadingWinner = "LoadingWinner",
     Waiting = "Waiting"
 }
 

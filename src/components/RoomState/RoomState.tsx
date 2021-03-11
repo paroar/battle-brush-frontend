@@ -7,6 +7,7 @@ import PanelVote from "../PanelVote/PanelVote"
 import Winner from "../Winner/Winner"
 import Theme from "../Theme/Theme"
 import Skeleton from "react-loading-skeleton"
+import Curtain from "../Curtain/Curtain"
 
 const RoomState = () => {
 
@@ -22,26 +23,40 @@ const RoomState = () => {
                 return <PanelVote />
             case GameState.Drawing:
             case GameState.Recolecting:
-                return (
-                    <>
-                        <Canvas width={864} height={540} />
-                        <span>Draw a <Theme /></span>
-                    </>
-                )
+                return <Canvas width={864} height={540} />
             case GameState.Loading:
                 return <Skeleton className="canvas-container" width={864} height={540} />
+            case GameState.LoadingDrawing:
+                return (
+                    <>
+                        <Curtain><span>Draw a </span><Theme /></Curtain>
+                        <Skeleton className="canvas-container" width={864} height={540} />
+                    </>
+                )
+            case GameState.LoadingVoting:
+                return (
+                    <>
+                        <Curtain><span>Voting</span></Curtain>
+                        <Skeleton className="canvas-container" width={864} height={540} />
+                    </>
+                )
+            case GameState.LoadingWinner:
+                return (
+                    <>
+                        <Curtain><span>And the winner is...</span></Curtain>
+                        <Skeleton className="canvas-container" width={864} height={540} />
+                    </>
+                )
             case GameState.Winner:
                 return <Winner />
+
+
             default:
                 return <p>State not recognized</p>
         }
     }
 
-    return (
-        <>
-            {renderState()}
-        </>
-    )
+    return renderState()
 }
 
 export default RoomState
