@@ -8,6 +8,7 @@ import Winner from "../Winner/Winner"
 import Theme from "../Theme/Theme"
 import Skeleton from "react-loading-skeleton"
 import Curtain from "../Curtain/Curtain"
+import CurtainMsg from "../Curtain/CurtainMsg"
 
 const RoomState = () => {
 
@@ -29,21 +30,23 @@ const RoomState = () => {
             case GameState.LoadingDrawing:
                 return (
                     <>
-                        <Curtain><span>Draw a </span><Theme /></Curtain>
+                        <Curtain><CurtainMsg text="Draw: " /><Theme /></Curtain>
                         <Skeleton className="canvas-container" width={864} height={540} />
                     </>
                 )
             case GameState.LoadingVoting:
                 return (
                     <>
-                        <Curtain><span>Voting</span></Curtain>
+                        <Curtain><CurtainMsg text="Vote the drawings" /></Curtain>
                         <Skeleton className="canvas-container" width={864} height={540} />
                     </>
                 )
             case GameState.LoadingWinner:
                 return (
                     <>
-                        <Curtain><span>And the winner is...</span></Curtain>
+                        <Curtain>
+                            <CurtainMsg text="And the winner with the less uglier art is..." />
+                        </Curtain>
                         <Skeleton className="canvas-container" width={864} height={540} />
                     </>
                 )

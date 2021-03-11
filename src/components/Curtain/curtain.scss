@@ -6,8 +6,18 @@
     background-color: $dark-grey;
     animation: curtain-down 1s ease-out 0s 1 forwards, curtain-up 1s ease-out 4s 1 forwards;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .curtain-msg{
+        font-family: "Avocados";
+        text-transform: uppercase;
+        color: $light-grey;
+        font-size: 2rem;
+        width: 30rem;
+        text-align: center;
+    }
 }
 
 @keyframes curtain-down {
