@@ -18,7 +18,6 @@ const ChoiceRoom = () => {
     }
 
     const createRoom = async () => {
-        console.log(userID)
         const res = await fetch(`http://localhost:8085/private/${userID}`)
         if (res.ok){
             const room = await res.json()
