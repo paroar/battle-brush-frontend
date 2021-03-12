@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
 import { WSContext } from "../../contexts/websocket"
 import Canvas from "../Canvas/Canvas"
 import { GameState } from "../../types/types"
@@ -14,46 +14,110 @@ const RoomState = () => {
 
     const {
         roomState,
+        userID,
+        room,
+        draw
     } = useContext(WSContext)
 
-    const renderState = () => {
+    const [imgCanvas, setImgCanvas] = useState("")
+    const [vote, setVote] = useState(3.5)
 
+    useLayoutEffect(() => {
+        if (roomState == GameState.Recolecting) {
+            fetch("http://localhost:8085/img", {
+                method: "POST",
+                body: JSON.stringify({
+                    playerid: userID,
+                    roomid: room.roomid,
+                    img: imgCanvas,
+                })
+            })
+        }
+    }, [roomState])
+
+    useEffect(() => {
+        if (roomState === GameState.RecolectingVotes) {
+            fetch("http://localhost:8085/vote", {
+                method: "POST",
+                body: JSON.stringify({
+                    playerid: draw.userid,
+                    vote: vote,
+                })
+            })
+        }
+    }, [roomState])
+
+    const handleImg = (img: string) => {
+        setImgCanvas(img)
+    }
+
+    const handleVote = (vote: number) => {
+        setVote(vote)
+    }
+
+    const renderStateVote = () => {
+        return <PanelVote handler={handleVote}/>
+    }
+
+    const renderStateDrawing = () => {
+        return <Canvas handler={handleImg} width={864} height={540} />
+    }
+    const renderStateWinner = () => {
+        return <Winner />
+    }
+
+    const renderStateLoading = () => {
+        return <Skeleton className="canvas-container" width={864} height={540} />
+
+    }
+
+    const renderStateLoadingDrawing = () => {
+        return (
+            <>
+                <Curtain><CurtainMsg text="Draw: " /><Theme /></Curtain>
+                <Skeleton className="canvas-container" width={864} height={540} />
+            </>
+        )
+    }
+
+    const renderStateLoadingVoting = () => {
+        return (
+            <>
+                <Curtain><CurtainMsg text="Vote the drawings" /></Curtain>
+                <Skeleton className="canvas-container" width={864} height={540} />
+            </>
+        )
+    }
+
+    const renderStateLoadingWinner = () => {
+        return (
+            <>
+                <Curtain>
+                    <CurtainMsg text="And the winner with the less uglier art is..." />
+                </Curtain>
+                <Skeleton className="canvas-container" width={864} height={540} />
+            </>
+        )
+    }
+
+    const renderState = () => {
         switch (roomState) {
             case GameState.Voting:
             case GameState.RecolectingVotes:
-                return <PanelVote />
+                return renderStateVote()
             case GameState.Drawing:
             case GameState.Recolecting:
-                return <Canvas width={864} height={540} />
+                return renderStateDrawing()
             case GameState.Loading:
-                return <Skeleton className="canvas-container" width={864} height={540} />
+                return renderStateLoading()
             case GameState.LoadingDrawing:
-                return (
-                    <>
-                        <Curtain><CurtainMsg text="Draw: " /><Theme /></Curtain>
-                        <Skeleton className="canvas-container" width={864} height={540} />
-                    </>
-                )
+                return renderStateLoadingDrawing()
             case GameState.LoadingVoting:
-                return (
-                    <>
-                        <Curtain><CurtainMsg text="Vote the drawings" /></Curtain>
-                        <Skeleton className="canvas-container" width={864} height={540} />
-                    </>
-                )
+                return renderStateLoadingVoting()
             case GameState.LoadingWinner:
-                return (
-                    <>
-                        <Curtain>
-                            <CurtainMsg text="And the winner with the less uglier art is..." />
-                        </Curtain>
-                        <Skeleton className="canvas-container" width={864} height={540} />
-                    </>
-                )
+                return renderStateLoadingWinner()
             case GameState.Winner:
-                return <Winner />
-
-
+                return renderStateWinner()
             default:
                 return <p>State not recognized</p>
         }

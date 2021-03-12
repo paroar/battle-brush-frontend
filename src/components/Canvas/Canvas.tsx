@@ -1,18 +1,15 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { WSContext } from "../../contexts/websocket";
-import { GameState } from "../../types/types";
+import React, { useEffect, useRef } from "react";
 import './canvas.css'
 
 type Props = {
   width: number
   height: number
+  handler: (_:string) => void
 }
 
 const Canvas = (props: Props) => {
 
-  const { width, height } = props
-
-  const { roomState, userID, room } = useContext(WSContext)
+  const { width, height, handler } = props
 
   const canvas = useRef<HTMLCanvasElement>(null)
   const ctx = useRef(canvas?.current?.getContext("2d"));
@@ -47,12 +44,12 @@ const Canvas = (props: Props) => {
       Math.round((e.clientX - rect!.left) / (rect!.right - rect!.left) * canvas.current!.width),
       Math.round((e.clientY - rect!.top) / (rect!.bottom - rect!.top) * canvas.current!.height)
     ]
-    console.log(mousePos)
     return mousePos
   }
 
   const stopDrawing = () => {
     isDrawing.current = false;
+    handler(canvas.current?.toDataURL()!)
   }
 
   useEffect(() => {
@@ -76,20 +73,6 @@ const Canvas = (props: Props) => {
       canvas.current?.removeEventListener("mouseout", stopDrawing);
     }
   }, []);
-
-  useEffect(() => {
-    if (roomState == GameState.Recolecting) {
-      const imgString = canvas.current?.toDataURL()
-      fetch("http://localhost:8085/img", {
-        method: "POST",
-        body: JSON.stringify({
-          playerid: userID,
-          roomid: room.roomid,
-          img: imgString,
-        })
-      })
-    }
-  }, [roomState])
 
   return (
     <div className="canvas-container">

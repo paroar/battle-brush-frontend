@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import poo from "../../assets/poo.png"
 import paper from "../../assets/paper.png"
 import sad from "../../assets/sad.png"
@@ -6,55 +6,42 @@ import great from "../../assets/great.png"
 import love from "../../assets/love.png"
 import unicorn from "../../assets/unicorn.png"
 import { WSContext } from '../../contexts/websocket'
-import { GameState } from '../../types/types'
+import Skeleton from 'react-loading-skeleton'
 
-const PanelVote = () => {
+type Props = {
+    handler: (_: number) => void
+}
+
+const PanelVote = (props: Props) => {
 
     const {
-        roomState,
         draw,
     } = useContext(WSContext)
 
-    const [vote, setVote] = useState(3.5)
-
-    useEffect(() => {
-        if (roomState === GameState.RecolectingVotes) {
-            fetch("http://localhost:8085/vote", {
-                method: "POST",
-                body: JSON.stringify({
-                    playerid: draw.userid,
-                    vote: vote,
-                })
-            })
-        }
-    }, [roomState])
-
-    useEffect(() => {
-        setVote(3.5)
-    }, [roomState])
+    const { handler } = props
 
     return (
         <>
-            <div className="container-img  canvas-container">
-                <img alt="user drawing" className="img" src={draw.img} />
-            </div>
+
+            <img alt="user drawing" className="img" src={draw.img} />
+
             <div className="voting">
-                <div onClick={() => setVote(1)}>
+                <div onClick={() => handler(1)}>
                     <img className="voting-img" alt="poo" src={poo} />
                 </div>
-                <div onClick={() => setVote(2)}>
+                <div onClick={() => handler(2)}>
                     <img className="voting-img" alt="paper" src={paper} />
                 </div>
-                <div onClick={() => setVote(3)}>
+                <div onClick={() => handler(3)}>
                     <img className="voting-img" alt="sad" src={sad} />
                 </div>
-                <div onClick={() => setVote(4)}>
+                <div onClick={() => handler(4)}>
                     <img className="voting-img" alt="great" src={great} />
                 </div>
-                <div onClick={() => setVote(5)}>
+                <div onClick={() => handler(5)}>
                     <img className="voting-img" alt="love" src={love} />
                 </div>
-                <div onClick={() => setVote(6)}>
+                <div onClick={() => handler(6)}>
                     <img className="voting-img" alt="unicorn" src={unicorn} />
                 </div>
             </div>
