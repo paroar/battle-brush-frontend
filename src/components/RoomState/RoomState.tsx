@@ -56,18 +56,18 @@ const RoomState = () => {
     }
 
     const renderStateVote = () => {
-        return <PanelVote handler={handleVote}/>
+        return <PanelVote handler={handleVote} width={864} height={540} />
     }
 
     const renderStateDrawing = () => {
         return <Canvas handler={handleImg} width={864} height={540} />
     }
     const renderStateWinner = () => {
-        return <Winner />
+        return <Winner width={864} height={540} />
     }
 
     const renderStateLoading = () => {
-        return <Skeleton className="canvas-container" width={864} height={540} />
+        return <Skeleton width={864} height={540} />
 
     }
 
@@ -75,7 +75,7 @@ const RoomState = () => {
         return (
             <>
                 <Curtain><CurtainMsg text="Draw: " /><Theme /></Curtain>
-                <Skeleton className="canvas-container" width={864} height={540} />
+                <Skeleton width={864} height={540} />
             </>
         )
     }
@@ -84,7 +84,7 @@ const RoomState = () => {
         return (
             <>
                 <Curtain><CurtainMsg text="Vote the drawings" /></Curtain>
-                <Skeleton className="canvas-container" width={864} height={540} />
+                <Skeleton width={864} height={540} />
             </>
         )
     }
@@ -95,7 +95,7 @@ const RoomState = () => {
                 <Curtain>
                     <CurtainMsg text="And the winner with the less uglier art is..." />
                 </Curtain>
-                <Skeleton className="canvas-container" width={864} height={540} />
+                <Skeleton width={864} height={540} />
             </>
         )
     }

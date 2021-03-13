@@ -1,18 +1,40 @@
-import { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
+import CanvasDraw from 'react-canvas-draw'
 import { WSContext } from '../../contexts/websocket'
 import Theme from '../Theme/Theme'
 
-const Winner = () => {
+type Props = {
+    width: number
+    height: number
+}
+
+const Winner = (props: Props) => {
 
     const {
         winner
     } = useContext(WSContext)
 
+    const {width, height} = props
+
+    const canvasRef = useRef<CanvasDraw>(null)
+
+    useEffect(() => {
+        if (canvasRef.current) {
+            canvasRef.current.loadSaveData(winner.img)
+        }
+    }, [])
+
     return (
         <>
-            <div className="canvas-container" >
-                <img alt="user drawing" className="img" src={winner.img} />
-            </div>
+            <CanvasDraw
+                ref={canvasRef}
+                loadTimeOffset={8}
+                brushRadius={5}
+                disabled
+                canvasWidth={width}
+                canvasHeight={height}
+                hideInterface={true}
+            />
             <Theme>: by {winner.username}</Theme>
         </>
     )

@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import poo from "../../assets/poo.png"
 import paper from "../../assets/paper.png"
 import sad from "../../assets/sad.png"
@@ -6,9 +6,11 @@ import great from "../../assets/great.png"
 import love from "../../assets/love.png"
 import unicorn from "../../assets/unicorn.png"
 import { WSContext } from '../../contexts/websocket'
-import Skeleton from 'react-loading-skeleton'
+import CanvasDraw from 'react-canvas-draw'
 
 type Props = {
+    width: number
+    height: number
     handler: (_: number) => void
 }
 
@@ -18,12 +20,27 @@ const PanelVote = (props: Props) => {
         draw,
     } = useContext(WSContext)
 
-    const { handler } = props
+    const { width, height, handler } = props
+
+    const canvasRef = useRef<CanvasDraw>(null)
+
+    useEffect(() => {
+        if (canvasRef.current) {
+            canvasRef.current.loadSaveData(draw.img)
+        }
+    }, [])
 
     return (
         <>
-
-            <img alt="user drawing" className="img" src={draw.img} />
+            <CanvasDraw
+                ref={canvasRef}
+                loadTimeOffset={8}
+                brushRadius={5}
+                disabled
+                canvasWidth={width}
+                canvasHeight={height}
+                hideInterface={true}
+            />
 
             <div className="voting">
                 <div onClick={() => handler(1)}>
