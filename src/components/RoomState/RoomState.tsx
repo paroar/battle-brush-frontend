@@ -22,7 +22,7 @@ const RoomState = () => {
     const [imgCanvas, setImgCanvas] = useState("")
     const [vote, setVote] = useState(3.5)
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (roomState == GameState.Recolecting) {
             fetch("http://localhost:8085/img", {
                 method: "POST",
