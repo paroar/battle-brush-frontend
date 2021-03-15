@@ -1,0 +1,93 @@
+.canvas-grid {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    grid-template-rows: auto;
+    grid-template-areas:
+        "canvas canvas canvas canvas tools"
+        "canvas canvas canvas canvas tools"
+        "brush-size pallete first second .";
+    gap: 1rem;
+}
+
+.canvas {
+    grid-area: canvas;
+    border: 1px solid $medium-grey;
+}
+
+.tools {
+    grid-area: tools;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: $light-grey;
+    border: 1px solid $medium-grey;
+
+    & > * {
+        fill: $medium-grey;
+        cursor: pointer;
+        padding: 1rem;
+
+        &:hover {
+            fill: $dark-grey;
+        }
+    }
+}
+
+.brush-size {
+    grid-area: brush-size;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: $light-grey;
+    border: 1px solid $medium-grey;
+
+    & > * {
+        fill: $medium-grey;
+        cursor: pointer;
+
+        &:hover {
+            fill: $dark-grey;
+        }
+    }
+}
+
+.pallete {
+    grid-area: pallete;
+    background-color: $light-grey;
+    border: 1px solid $medium-grey;
+    padding: 0.5rem;
+
+    display: grid;
+    grid-template-columns: repeat(15, auto);
+    grid-template-rows: auto;
+    justify-content: space-evenly;
+    align-content: center;
+    gap: 0.2rem;
+
+    & > * {
+        cursor: pointer;
+    }
+}
+
+.first {
+    grid-area: first;
+    background-color: $light-grey;
+    border: 1px solid $medium-grey;
+    padding: 0.2rem;
+}
+
+.second {
+    grid-area: second;
+    background-color: $light-grey;
+    border: 1px solid $medium-grey;
+    padding: 0.2rem;
+}
+
+.input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+}

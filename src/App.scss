@@ -13,7 +13,7 @@
 
 $light-grey: #f8f9fa;
 $medium-grey: #adb5bd;
-$medium-dark-grey: #6C757D;
+$medium-dark-grey: #6c757d;
 $dark-grey: #212529;
 
 @import "./pages/home/home.scss";
@@ -24,3 +24,4 @@ $dark-grey: #212529;
 @import "./components/Badge/badge.scss";
 @import "./components/Curtain/curtain.scss";
 @import "./components/Chat/chat.scss";
+@import "./components/CanvasFrame/canvas-frame.scss";
