@@ -2,6 +2,7 @@ import { useContext, useState, useRef, useEffect } from "react"
 import { WSContext } from "../../contexts/websocket"
 import { MessageType } from "../../types/types"
 import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs"
+import { ReactComponent as LeftCorner } from "../../assets/left-corner.svg"
 
 const Chat = () => {
 
@@ -62,13 +63,15 @@ const Chat = () => {
                             <div className="chat-messages-misc">
                                 <span>{t.msg}</span>
                             </div>
-                            :
-                            <div className={`chat-messages-wrapper ${t.username === userName ? 'message-out' : 'message-in'}`}>
-                                <div className={`message-box`}>
-                                    <span className={`message-title ${t.username === userName ? 'message-title-hide' : 'message-in'}`}>{t.username}</span>
-                                    <span>{t.msg}</span>
+                            : <>
+                                <div className={`chat-messages-wrapper ${t.username === userName ? 'message-out' : ''}`}>
+                                    <LeftCorner className={`message-corner ${t.username === userName ? 'corner-reverse' : ''}`} />
+                                    <div className={`message-content `}>
+                                        <span className={`message-title ${t.username === userName ? 'message-title-hide' : ''}`}>{t.username}</span>
+                                        <span>{t.msg}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                     ))}
                 </div>
                 <div className="chat-input">

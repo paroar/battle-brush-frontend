@@ -66,17 +66,33 @@
 .chat-messages-wrapper {
     display: flex;
     flex-direction: column;
+    margin-left: 0.5rem;
 }
 
-.message-box {
+.message-content {
     background-color: $medium-dark-grey;
     border-radius: 5px;
     padding: 5px 10px 5px 10px;
     margin: 2px 10px 2px 10px;
-    display: inline-flex;
-    flex-direction: column;
     max-width: 75%;
     word-wrap: break-word;
+    z-index: 10;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.corner-reverse {
+    transform: scaleX(-1);
+}
+
+.message-corner {
+    position: absolute;
+    margin: -3px 2px 0 2px;
+
+    & > * {
+        fill: $medium-dark-grey;
+        stroke: $medium-dark-grey;
+    }
 }
 
 .message-out {
