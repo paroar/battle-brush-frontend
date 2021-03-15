@@ -3,3 +3,27 @@
     justify-content: center;
     margin: 3rem;
 }
+
+.btn-back {
+    font-size: xx-large;
+    text-transform: uppercase;
+    text-shadow: 1px -1px #6253027a;
+    color: #f8f9fa;
+    background-image: url("../../assets/btn.svg");
+    width: 185px;
+    height: 57px;
+    background-position: 0px 115px;
+    text-align: center;
+    font-weight: bold;
+    margin: 1rem;
+
+    &:active {
+        background-position: 175px 110px;
+        transform: translate(-5px, 5px);
+    }
+
+    & > span {
+        display: block;
+        margin-top: 2px;
+    }
+}
