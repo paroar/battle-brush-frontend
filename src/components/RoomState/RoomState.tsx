@@ -74,7 +74,10 @@ const RoomState = () => {
     const renderStateLoadingDrawing = () => {
         return (
             <>
-                <Curtain><CurtainMsg text="Draw: " /><Theme /></Curtain>
+                <Curtain className="curtain">
+                    <CurtainMsg text="Draw: " />
+                    <Theme />
+                </Curtain>
                 <Skeleton width={864} height={540} />
             </>
         )
@@ -83,7 +86,9 @@ const RoomState = () => {
     const renderStateLoadingVoting = () => {
         return (
             <>
-                <Curtain><CurtainMsg text="Vote the drawings" /></Curtain>
+                <Curtain className="curtain">
+                    <CurtainMsg text="Vote the drawings" />
+                </Curtain>
                 <Skeleton width={864} height={540} />
             </>
         )
@@ -92,7 +97,7 @@ const RoomState = () => {
     const renderStateLoadingWinner = () => {
         return (
             <>
-                <Curtain>
+                <Curtain className="curtain">
                     <CurtainMsg text="And the winner with the less uglier art is..." />
                 </Curtain>
                 <Skeleton width={864} height={540} />

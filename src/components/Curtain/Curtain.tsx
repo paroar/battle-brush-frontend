@@ -1,13 +1,17 @@
 import React from 'react'
 
 type Props = {
-    children: React.ReactNode
+    children?: React.ReactNode
+    className?: string
 }
 
 const Curtain = (props: Props) => {
+
+    const {children, className} = props
+
     return (
-        <div className="curtain">
-            {props.children}
+        <div className={className}>
+            {children}
         </div>
     )
 }
