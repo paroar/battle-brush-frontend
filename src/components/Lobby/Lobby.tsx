@@ -38,9 +38,9 @@ const Lobby = () => {
                     <RoomState />
                 }
             </div>
-            <div className="lobby-right">
-                <Chat />
-            </div>
+
+            <Chat />
+
         </div>
     )
 }

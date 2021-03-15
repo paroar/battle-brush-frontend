@@ -1,0 +1,117 @@
+.chat {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $dark-grey;
+    transition: transform 0.5s;
+    width: 20rem;
+    color: $light-grey;
+    border-left: 1px solid $light-grey;
+
+    .chat-header-wrapper {
+        position: relative;
+    }
+
+    &-header {
+        text-align: center;
+        border-bottom: 1px solid $medium-grey;
+        padding: 1rem;
+
+        &-title {
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+
+    .chat-messages {
+        flex: 1;
+        overflow-y: scroll;
+        display: inline-flex;
+        flex-direction: column;
+        padding: 10px 0px;
+    }
+}
+
+.collapse-btn {
+    padding: 0.5rem;
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.collapse {
+    width: 0;
+}
+
+.reverse {
+    color: $dark-grey;
+    position: absolute;
+    right: 0;
+    z-index: 0;
+    margin: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.chat-messages-misc {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.chat-messages-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.message-box {
+    background-color: $medium-dark-grey;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    margin: 2px 10px 2px 10px;
+    display: inline-flex;
+    flex-direction: column;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+
+.message-out {
+    align-items: flex-end;
+}
+
+.message-in {
+    align-items: flex-start;
+}
+
+.message-title {
+    font-weight: bold;
+}
+
+.message-title-hide {
+    display: none;
+}
+
+.chat-messages-text-username {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.chat-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: lightskyblue;
+}
+
+.chat-input > input {
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 25px;
+    width: 100%;
+    border: 1px solid white;
+}

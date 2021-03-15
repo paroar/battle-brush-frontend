@@ -1,7 +1,6 @@
 .lobby{
     height: 100%;
     display: flex;
-    justify-content: space-between;
 
     .lobby-left{
         flex: 1;
@@ -10,9 +9,6 @@
         align-items: center;
     }
     
-    .lobby-right{
-        width: 20rem;
-    }
 }
 
 .lobby-canvas{
