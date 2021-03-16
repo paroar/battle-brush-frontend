@@ -46,7 +46,7 @@ const CanvasFrame = (props: Props) => {
         if (canvasRef.current && drawImg) {
             canvasRef.current.loadSaveData(drawImg)
         }
-    }, [])
+    }, [drawImg])
 
     const handleClear = () => {
         if (canvasRef.current) {
@@ -67,7 +67,7 @@ const CanvasFrame = (props: Props) => {
     }
 
     const handleEraser = () => {
-        if (tool != "eraser") {
+        if (tool !== "eraser") {
             setTool("eraser")
             setLazyRadius(0)
             setBrushColorSecond(brushColor)
@@ -76,11 +76,17 @@ const CanvasFrame = (props: Props) => {
     }
 
     const handleBrush = () => {
-        if (tool != "brush") {
+        if (tool !== "brush") {
             setTool("brush")
             setLazyRadius(10)
             setBrushColor(brushColorSecond)
             setBrushColorSecond(brushColor)
+        }
+    }
+
+    const submitImg = () => {
+        if (canvasRef.current) {
+            handlerImg(canvasRef.current.getSaveData())
         }
     }
 
@@ -97,7 +103,7 @@ const CanvasFrame = (props: Props) => {
                 hideGrid={true}
                 disabled={isDisabled}
                 hideInterface={isDisabled}
-                onChange={() => handlerImg(canvasRef.current!.getSaveData())}
+                onChange={() => submitImg()}
             />
 
             {isDisabled ?
@@ -113,12 +119,12 @@ const CanvasFrame = (props: Props) => {
                         </div>
                         <div className="brush-size">
                             {brushSizes.map(b => (
-                                <FaDotCircle size={b * 2} onClick={() => setBrushSize(b)} className={brushSize === b ? "selected" : ""} />
+                                <FaDotCircle key={b} size={b * 2} onClick={() => setBrushSize(b)} className={brushSize === b ? "selected" : ""} />
                             ))}
                         </div>
                         <div className="pallete">
                             {pallete.map(p => (
-                                <FaSquare color={p} size={30} onClick={() => handleColor(p)} />
+                                <FaSquare key={p} color={p} size={30} onClick={() => handleColor(p)} />
                             ))}
                         </div>
                         <div className="first">
