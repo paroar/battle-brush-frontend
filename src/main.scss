@@ -2,11 +2,15 @@
 @import "./style/fonts.scss";
 @import "./style/defaults.scss";
 @import "./pages/home/home.scss";
-@import "./components/ChoiceRoom/choiceRoom.scss";
-@import "./components/Btn/btn.scss";
 @import "./components/Lobby/lobby.scss";
+@import "./components/Game/game.scss";
+@import "./components/ChoiceRoom/choiceRoom.scss";
+@import "./components/Players/players.scss";
+@import "./components/PanelVote/panel-vote.scss";
 @import "./components/UserInfo/userinfo.scss";
 @import "./components/Badge/badge.scss";
 @import "./components/Curtain/curtain.scss";
 @import "./components/Chat/chat.scss";
 @import "./components/CanvasFrame/canvas-frame.scss";
+@import "./components/Winner/winner.scss";
+

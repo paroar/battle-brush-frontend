@@ -8,9 +8,16 @@ import unicorn from "../../assets/unicorn.png"
 import { WSContext } from '../../contexts/websocket'
 import CanvasFrame from '../CanvasFrame/CanvasFrame'
 
+const images = [
+    { alt: "poo", src: poo, vote: 1 },
+    { alt: "paper", src: paper, vote: 2 },
+    { alt: "sad", src: sad, vote: 3 },
+    { alt: "great", src: great, vote: 4 },
+    { alt: "love", src: love, vote: 5 },
+    { alt: "unicorn", src: unicorn, vote: 6 },
+]
+
 type Props = {
-    width: number
-    height: number
     handler: (_: number) => void
 }
 
@@ -24,27 +31,13 @@ const PanelVote = (props: Props) => {
 
     return (
         <>
-            <CanvasFrame isDisabled={true} handlerImg={() => { }} drawImg={draw.img}/>
-
-            <div className="voting">
-                <div onClick={() => handler(1)}>
-                    <img className="voting-img" alt="poo" src={poo} />
-                </div>
-                <div onClick={() => handler(2)}>
-                    <img className="voting-img" alt="paper" src={paper} />
-                </div>
-                <div onClick={() => handler(3)}>
-                    <img className="voting-img" alt="sad" src={sad} />
-                </div>
-                <div onClick={() => handler(4)}>
-                    <img className="voting-img" alt="great" src={great} />
-                </div>
-                <div onClick={() => handler(5)}>
-                    <img className="voting-img" alt="love" src={love} />
-                </div>
-                <div onClick={() => handler(6)}>
-                    <img className="voting-img" alt="unicorn" src={unicorn} />
-                </div>
+            <CanvasFrame isDisabled={true} drawImg={draw.img} />
+            <div className="panel-vote">
+                {images.map(i => (
+                    <div onClick={() => handler(i.vote)}>
+                        <img className="panel-vote__img" alt={i.alt} src={i.src} />
+                    </div>
+                ))}
             </div>
         </>
     )

@@ -22,9 +22,14 @@ const pallete = [
 
 const brushSizes = [5, 10, 15, 20]
 
+enum ACTIONS {
+    BRUSH = "brush",
+    ERASE = "erase",
+}
+
 type Props = {
     drawImg?: string
-    handlerImg: (_: string) => void
+    handlerImg?: (_: string) => void
     isDisabled: boolean
 }
 
@@ -38,7 +43,7 @@ const CanvasFrame = (props: Props) => {
     const [brushSize, setBrushSize] = useState(5)
     const [lazyRadius, setLazyRadius] = useState(10)
 
-    const [tool, setTool] = useState("brush")
+    const [tool, setTool] = useState(ACTIONS.BRUSH)
 
     const canvasRef = useRef<CanvasDraw>(null)
 
@@ -62,13 +67,13 @@ const CanvasFrame = (props: Props) => {
 
     const handleColor = (c: string) => {
         setBrushColor(c)
-        setTool("brush")
+        setTool(ACTIONS.BRUSH)
         setLazyRadius(10)
     }
 
     const handleEraser = () => {
-        if (tool !== "eraser") {
-            setTool("eraser")
+        if (tool !== ACTIONS.ERASE) {
+            setTool(ACTIONS.ERASE)
             setLazyRadius(0)
             setBrushColorSecond(brushColor)
             setBrushColor("#ffffff")
@@ -76,8 +81,8 @@ const CanvasFrame = (props: Props) => {
     }
 
     const handleBrush = () => {
-        if (tool !== "brush") {
-            setTool("brush")
+        if (tool !== ACTIONS.BRUSH) {
+            setTool(ACTIONS.BRUSH)
             setLazyRadius(10)
             setBrushColor(brushColorSecond)
             setBrushColorSecond(brushColor)
@@ -85,15 +90,15 @@ const CanvasFrame = (props: Props) => {
     }
 
     const submitImg = () => {
-        if (canvasRef.current) {
+        if (canvasRef.current && handlerImg) {
             handlerImg(canvasRef.current.getSaveData())
         }
     }
 
     return (
-        <div className="canvas-grid">
+        <div className="canvas-frame">
             <CanvasDraw
-                className={`canvas ${tool}`}
+                className={`canvas-frame__canvas ${tool}`}
                 ref={canvasRef}
                 brushRadius={brushSize}
                 canvasWidth={864}
@@ -111,23 +116,23 @@ const CanvasFrame = (props: Props) => {
                 :
                 (
                     <>
-                        <div className="tools">
+                        <div className="canvas-frame__tools">
                             <FaRegTrashAlt size={25} onClick={() => handleClear()} />
                             <FaBackward size={25} onClick={() => handleUndo()} />
-                            <FaEraser size={25} onClick={() => handleEraser()} className={tool === "eraser" ? "selected" : ""} />
-                            <FaPaintBrush size={25} onClick={() => handleBrush()} className={tool === "brush" ? "selected" : ""} />
+                            <FaEraser size={25} onClick={() => handleEraser()} className={tool === ACTIONS.ERASE ? "selected" : ""} />
+                            <FaPaintBrush size={25} onClick={() => handleBrush()} className={tool === ACTIONS.BRUSH ? "selected" : ""} />
                         </div>
-                        <div className="brush-size">
+                        <div className="canvas-frame__brush-size">
                             {brushSizes.map(b => (
                                 <FaDotCircle key={b} size={b * 2} onClick={() => setBrushSize(b)} className={brushSize === b ? "selected" : ""} />
                             ))}
                         </div>
-                        <div className="pallete">
+                        <div className="canvas-frame__pallete">
                             {pallete.map(p => (
                                 <FaSquare key={p} color={p} size={30} onClick={() => handleColor(p)} />
                             ))}
                         </div>
-                        <div className="first">
+                        <div className="canvas-frame__pick">
                             <input className="input" type="color" name="" id="" value={brushColor} onChange={(e) => setBrushColor(e.currentTarget.value)} />
                         </div>
                     </>

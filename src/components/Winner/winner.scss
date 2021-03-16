@@ -1,0 +1,13 @@
+.winner {
+    background-color: $light-grey;
+    border: 1px solid $medium-grey;
+    font-size: 3rem;
+    padding: 1rem;
+    margin: 1rem;
+    color: $dark-grey;
+
+    &__theme{
+        text-transform: uppercase;
+        font-family: "Avocados";
+    }
+}

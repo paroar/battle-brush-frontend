@@ -3,7 +3,6 @@ import { WSContext } from "../../contexts/websocket"
 import { GameState } from "../../types/types"
 import PanelVote from "../PanelVote/PanelVote"
 import Winner from "../Winner/Winner"
-import Theme from "../Theme/Theme"
 import Skeleton from "react-loading-skeleton"
 import Curtain from "../Curtain/Curtain"
 import CurtainMsg from "../Curtain/CurtainMsg"
@@ -15,7 +14,8 @@ const RoomState = () => {
         roomState,
         userID,
         room,
-        draw
+        draw,
+        theme
     } = useContext(WSContext)
 
     const [imgCanvas, setImgCanvas] = useState("")
@@ -55,7 +55,7 @@ const RoomState = () => {
     }
 
     const renderStateVote = () => {
-        return <PanelVote handler={handleVote} width={864} height={540} />
+        return <PanelVote handler={handleVote}/>
     }
 
     const renderStateDrawing = () => {
@@ -74,8 +74,8 @@ const RoomState = () => {
         return (
             <>
                 <Curtain className="curtain">
-                    <CurtainMsg text="Draw: " />
-                    <Theme />
+                    <CurtainMsg text="Draw" />
+                    <CurtainMsg text={theme} />
                 </Curtain>
                 <Skeleton width={864} height={540} />
             </>
@@ -97,7 +97,7 @@ const RoomState = () => {
         return (
             <>
                 <Curtain className="curtain">
-                    <CurtainMsg text="And the winner with the less uglier art is..." />
+                    <CurtainMsg text="And the winner is..." />
                 </Curtain>
                 <Skeleton width={864} height={540} />
             </>

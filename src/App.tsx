@@ -4,11 +4,9 @@ import Home from './pages/home/home';
 
 function App() {
   return (
-    <div className="content-wrapper">
       <WSContextProvider>
         <Home />
       </WSContextProvider>
-    </div>
   );
 }
 

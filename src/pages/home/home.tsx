@@ -17,22 +17,20 @@ const Home = () => {
         })
     }, [])
 
-    if (room.roomid) {
-        return <Lobby />
-    } else {
-        return (
-            <>
+    return (
+        <div className="content-wrapper">
+            {room.roomid ?
+                <Lobby />
+                :
                 <section className="home">
-                    <h1 className="title">what the f*** is that</h1>
-                    <div id="home-svg" className="svg"/>
+                    <h1 className="home__title">what the f*** is that</h1>
+                    <div id="home-svg" className="home__svg" />
                     <ChoiceRoom />
-                    <span className="contact">Want to add your drawing to the front page? Contact me at <a href="">email</a></span>
+                    <span className="home__contact">Want to add your drawing to the front page? Contact me at <a href="">email</a></span>
                 </section>
-            </>
-        )
-    }
-
-
+            }
+        </div>
+    )
 }
 
 export default Home

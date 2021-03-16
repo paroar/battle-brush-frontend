@@ -1,0 +1,12 @@
+.panel-vote {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+    background-color: $light-grey;
+    border: 1px solid $medium-grey;
+
+    &__img {
+        margin: 0.5rem 2rem;
+        cursor: pointer;
+    }
+}
