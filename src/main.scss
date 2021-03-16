@@ -1,21 +1,6 @@
-.content-wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  min-width: 80rem;
-}
-
-@font-face {
-  font-family: "Avocados";
-  src: url("./assets/Avocados.ttf");
-}
-
-$light-grey: #f8f9fa;
-$medium-grey: #adb5bd;
-$medium-dark-grey: #6c757d;
-$dark-grey: #212529;
-
+@import "./style/colors.scss";
+@import "./style/fonts.scss";
+@import "./style/defaults.scss";
 @import "./pages/home/home.scss";
 @import "./components/ChoiceRoom/choiceRoom.scss";
 @import "./components/Btn/btn.scss";
