@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react"
+import React, { useContext } from "react"
 import Chat from "../Chat/Chat"
 import RoomState from "../RoomState/RoomState"
 import Players from "../Players/Players"
@@ -24,7 +24,7 @@ const Lobby = () => {
                 <Players />
                 {roomState === GameState.Waiting ?
                     <>
-                        <CanvasFrame></CanvasFrame>
+                        <CanvasFrame isDisabled={false} handlerImg={() => { }} />
                         <div className="btn-back" onClick={() => handleStart()}>
                             <span>Start</span>
                         </div>

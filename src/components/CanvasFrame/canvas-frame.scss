@@ -5,7 +5,7 @@
     grid-template-areas:
         "canvas canvas canvas canvas tools"
         "canvas canvas canvas canvas tools"
-        "brush-size pallete first second .";
+        "brush-size brush-size pallete first .";
     gap: 1rem;
 }
 
@@ -33,6 +33,10 @@
     }
 }
 
+.selected {
+    fill: $dark-grey !important;
+}
+
 .brush-size {
     grid-area: brush-size;
     display: flex;
@@ -43,6 +47,7 @@
 
     & > * {
         fill: $medium-grey;
+        margin: 0.1rem;
         cursor: pointer;
 
         &:hover {

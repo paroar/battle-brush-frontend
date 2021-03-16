@@ -1,5 +1,6 @@
+import { useEffect, useRef, useState } from 'react'
 import CanvasDraw from 'react-canvas-draw'
-import { FaEraser, FaRegTrashAlt, FaBackward, FaPaintBrush, FaDotCircle, FaSquare, FaSave } from 'react-icons/fa'
+import { FaEraser, FaRegTrashAlt, FaBackward, FaPaintBrush, FaDotCircle, FaSquare } from 'react-icons/fa'
 
 const pallete = [
     "#0771df",
@@ -19,40 +20,113 @@ const pallete = [
     "#000000",
 ]
 
-const CanvasFrame = () => {
+const brushSizes = [5, 10, 15, 20]
+
+type Props = {
+    drawImg?: string
+    handlerImg: (_: string) => void
+    isDisabled: boolean
+}
+
+const CanvasFrame = (props: Props) => {
+
+    const { handlerImg, isDisabled, drawImg } = props
+
+    const [brushColor, setBrushColor] = useState("#000000")
+    const [brushColorSecond, setBrushColorSecond] = useState("#000000")
+
+    const [brushSize, setBrushSize] = useState(5)
+    const [lazyRadius, setLazyRadius] = useState(10)
+
+    const [tool, setTool] = useState("brush")
+
+    const canvasRef = useRef<CanvasDraw>(null)
+
+    useEffect(() => {
+        if (canvasRef.current && drawImg) {
+            canvasRef.current.loadSaveData(drawImg)
+        }
+    }, [])
+
+    const handleClear = () => {
+        if (canvasRef.current) {
+            canvasRef.current.clear()
+        }
+    }
+
+    const handleUndo = () => {
+        if (canvasRef.current) {
+            canvasRef.current.undo()
+        }
+    }
+
+    const handleColor = (c: string) => {
+        setBrushColor(c)
+        setTool("brush")
+        setLazyRadius(10)
+    }
+
+    const handleEraser = () => {
+        if (tool != "eraser") {
+            setTool("eraser")
+            setLazyRadius(0)
+            setBrushColorSecond(brushColor)
+            setBrushColor("#ffffff")
+        }
+    }
+
+    const handleBrush = () => {
+        if (tool != "brush") {
+            setTool("brush")
+            setLazyRadius(10)
+            setBrushColor(brushColorSecond)
+            setBrushColorSecond(brushColor)
+        }
+    }
+
     return (
         <div className="canvas-grid">
             <CanvasDraw
-                className="canvas"
-                brushRadius={5}
+                className={`canvas ${tool}`}
+                ref={canvasRef}
+                brushRadius={brushSize}
                 canvasWidth={864}
                 canvasHeight={540}
+                brushColor={brushColor}
+                lazyRadius={lazyRadius}
+                hideGrid={true}
+                disabled={isDisabled}
+                hideInterface={isDisabled}
+                onChange={() => handlerImg(canvasRef.current!.getSaveData())}
             />
-            <div className="tools">
-                <FaSave size={25} />
-                <FaRegTrashAlt size={25} />
-                <FaBackward size={25} />
-                <FaEraser size={25} />
-                <FaPaintBrush size={25} />
-            </div>
-            <div className="brush-size">
-                <FaDotCircle size={10} />
-                <FaDotCircle size={15} />
-                <FaDotCircle size={20} />
-                <FaDotCircle size={25} />
-                <FaDotCircle size={30} />
-            </div>
-            <div className="pallete">
-                {pallete.map(p => (
-                    <FaSquare color={p} size={20} />
-                ))}
-            </div>
-            <div className="first">
-                <input className="input" type="color" name="" id="" />
-            </div>
-            <div className="second">
-                <input className="input" type="color" name="" id="" />
-            </div>
+
+            {isDisabled ?
+                null
+                :
+                (
+                    <>
+                        <div className="tools">
+                            <FaRegTrashAlt size={25} onClick={() => handleClear()} />
+                            <FaBackward size={25} onClick={() => handleUndo()} />
+                            <FaEraser size={25} onClick={() => handleEraser()} className={tool === "eraser" ? "selected" : ""} />
+                            <FaPaintBrush size={25} onClick={() => handleBrush()} className={tool === "brush" ? "selected" : ""} />
+                        </div>
+                        <div className="brush-size">
+                            {brushSizes.map(b => (
+                                <FaDotCircle size={b * 2} onClick={() => setBrushSize(b)} className={brushSize === b ? "selected" : ""} />
+                            ))}
+                        </div>
+                        <div className="pallete">
+                            {pallete.map(p => (
+                                <FaSquare color={p} size={30} onClick={() => handleColor(p)} />
+                            ))}
+                        </div>
+                        <div className="first">
+                            <input className="input" type="color" name="" id="" value={brushColor} onChange={(e) => setBrushColor(e.currentTarget.value)} />
+                        </div>
+                    </>
+                )
+            }
         </div>
     )
 }

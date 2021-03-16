@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { WSContext } from "../../contexts/websocket"
-import Canvas from "../Canvas/Canvas"
 import { GameState } from "../../types/types"
-
 import PanelVote from "../PanelVote/PanelVote"
 import Winner from "../Winner/Winner"
 import Theme from "../Theme/Theme"
 import Skeleton from "react-loading-skeleton"
 import Curtain from "../Curtain/Curtain"
 import CurtainMsg from "../Curtain/CurtainMsg"
+import CanvasFrame from "../CanvasFrame/CanvasFrame"
 
 const RoomState = () => {
 
@@ -60,10 +59,10 @@ const RoomState = () => {
     }
 
     const renderStateDrawing = () => {
-        return <Canvas handler={handleImg} width={864} height={540} />
+        return <CanvasFrame isDisabled={false} handlerImg={handleImg} />
     }
     const renderStateWinner = () => {
-        return <Winner width={864} height={540} />
+        return <Winner/>
     }
 
     const renderStateLoading = () => {

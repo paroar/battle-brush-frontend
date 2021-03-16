@@ -1,7 +1,5 @@
 import { useContext } from 'react'
 import { WSContext } from '../../contexts/websocket';
-import Btn from '../Btn/Btn';
-import { ReactComponent as Button } from '../../assets/btn.svg'
 
 const ChoiceRoom = () => {
 
