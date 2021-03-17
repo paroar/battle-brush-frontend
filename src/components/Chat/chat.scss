@@ -4,7 +4,6 @@
     flex-direction: column;
     background-color: $dark-grey;
     transition: transform 0.5s;
-    width: 20rem;
     color: $light-grey;
     border-left: 1px solid $medium-grey;
 
@@ -41,7 +40,7 @@
 }
 
 .collapse {
-    width: 0;
+    display: none;
 }
 
 .reverse {

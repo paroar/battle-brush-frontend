@@ -3,7 +3,10 @@
     font-size: medium;
     font-weight: bolder;
     padding: 0.5rem 1rem;
-    margin: 1rem;
     align-self: center;
-    background-color: $medium-grey;
+    color: $dark-grey;
+    background-color: #ffe600;
+    box-shadow: -1px 1px #6253027a;
+    border-top-right-radius: 50rem;
+    border-bottom-right-radius: 50rem;
 }

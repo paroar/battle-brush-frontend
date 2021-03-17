@@ -1,6 +1,37 @@
-.user-info {
+.share {
     align-self: flex-end;
     margin: 2rem;
     font-size: 1.5rem;
     display: flex;
+    position: absolute;
+    bottom: 0;
+    justify-self: end;
+
+    &__input {
+        border: 1px solid $medium-grey;
+        color: $dark-grey;
+        background-color: $light-grey;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::selection {
+            background: $dark-grey;
+            color: $light-grey;
+        }
+    }
+
+    &__btn {
+        background-color: $dark-grey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        & > * {
+            fill: $light-grey;
+            margin: 0.5rem;
+        }
+    }
 }

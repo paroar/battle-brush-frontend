@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton"
 import Curtain from "../Curtain/Curtain"
 import CurtainMsg from "../Curtain/CurtainMsg"
 import CanvasFrame from "../CanvasFrame/CanvasFrame"
+import Timer from "../Timer/Timer"
 
 const RoomState = () => {
 
@@ -55,14 +56,34 @@ const RoomState = () => {
     }
 
     const renderStateVote = () => {
-        return <PanelVote handler={handleVote}/>
+        return (
+            <>
+                <PanelVote handler={handleVote} />
+                <Timer
+                    seconds={10}
+                    color="#e56"
+                    alpha={0.9}
+                    size={70}
+                />
+            </>
+        )
     }
 
     const renderStateDrawing = () => {
-        return <CanvasFrame isDisabled={false} handlerImg={handleImg} />
+        return (
+            <>
+                <CanvasFrame isDisabled={false} handlerImg={handleImg} />
+                <Timer
+                    seconds={60}
+                    color="#e56"
+                    alpha={0.9}
+                    size={70}
+                />
+            </>
+        )
     }
     const renderStateWinner = () => {
-        return <Winner/>
+        return <Winner />
     }
 
     const renderStateLoading = () => {

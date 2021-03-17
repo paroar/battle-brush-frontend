@@ -1,5 +1,6 @@
 import { useContext, useRef } from 'react'
 import { WSContext } from '../../contexts/websocket'
+import { FaCopy } from 'react-icons/fa'
 
 const UserInfo = () => {
 
@@ -14,12 +15,14 @@ const UserInfo = () => {
 
     if (room.roomtype == "Private") {
         return (
-            <div className="user-info">
-                <input type="text" ref={roomClipboard} value={`http://localhost:3000/${room.roomid}`} />
-                <button onClick={() => copyClipboard()}>Copy</button>
+            <div className="share">
+                <input className="share__input" type="text" ref={roomClipboard} value={`http://localhost:3000/${room.roomid}`} />
+                <div className="share__btn" onClick={() => copyClipboard()}>
+                    <FaCopy size={20} />
+                </div>
             </div>
         )
-    }else {
+    } else {
         return null
     }
 }

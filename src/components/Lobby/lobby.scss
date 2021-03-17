@@ -1,4 +1,9 @@
-.lobby{
+.lobby {
     height: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto minmax(15rem, 25rem);
+}
+
+.span {
+    grid-template-columns: auto;
 }

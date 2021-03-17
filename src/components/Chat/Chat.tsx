@@ -4,13 +4,18 @@ import { MessageType } from "../../types/types"
 import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs"
 import { ReactComponent as LeftCorner } from "../../assets/left-corner.svg"
 
-const Chat = () => {
+type Props = {
+    handleChat: () => void
+    chatIsHidden: boolean
+}
+
+const Chat = (props: Props) => {
 
     const { userID, userName, chatMessages, room } = useContext(WSContext)
 
-    const [msg, setMsg] = useState("")
+    const {chatIsHidden, handleChat} = props
 
-    const [isHidden, setIsHidden] = useState(false)
+    const [msg, setMsg] = useState("")
 
     const handleMessages = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const msgInput = msg.trim()
@@ -43,14 +48,14 @@ const Chat = () => {
             <BsArrowBarLeft
                 className="reverse"
                 size={30}
-                onClick={() => setIsHidden(!isHidden)}
+                onClick={() => handleChat()}
             />
-            <div className={`chat  ${isHidden ? "collapse" : ""}`}>
+            <div className={`chat  ${chatIsHidden ? "collapse" : ""}`}>
                 <div className="chat-header-wrapper">
                     <BsArrowBarRight
                         className="collapse-btn"
                         size={30}
-                        onClick={() => setIsHidden(!isHidden)}
+                        onClick={() => handleChat()}
                     />
                     <div className="chat-header">
                         <span className="chat-header-title">Room Chat</span>
