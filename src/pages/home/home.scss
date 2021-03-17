@@ -7,8 +7,9 @@
 }
 
 .home {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    justify-items: center;
     align-items: center;
 
     &__title {
