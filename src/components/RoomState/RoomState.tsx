@@ -44,6 +44,7 @@ const RoomState = () => {
                     vote: vote,
                 })
             })
+            setVote(3.5)
         }
     }, [roomState])
 
