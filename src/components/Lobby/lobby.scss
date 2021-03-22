@@ -1,7 +1,11 @@
 .lobby {
     height: 100%;
     display: grid;
-    grid-template-columns: auto minmax(15rem, 25rem);
+    grid-template-columns: auto minmax(10rem, 20rem);
+
+    @media (max-width: $bp-xl) {
+        grid-template-columns: auto;
+    }
 }
 
 .span {
