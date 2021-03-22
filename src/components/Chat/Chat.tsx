@@ -13,7 +13,7 @@ const Chat = (props: Props) => {
 
     const { userID, userName, chatMessages, room } = useContext(WSContext)
 
-    const {chatIsHidden, handleChat} = props
+    const { chatIsHidden, handleChat } = props
 
     const [msg, setMsg] = useState("")
 
@@ -50,33 +50,29 @@ const Chat = (props: Props) => {
                 size={30}
                 onClick={() => handleChat()}
             />
-            <div className={`chat  ${chatIsHidden ? "collapse" : ""}`}>
-                <div className="chat-header-wrapper">
+            <div className={`chat  ${chatIsHidden ? "hide" : ""}`}>
+                <div className="chat-header">
                     <BsArrowBarRight
                         className="collapse-btn"
                         size={30}
                         onClick={() => handleChat()}
                     />
-                    <div className="chat-header">
-                        <span className="chat-header-title">Room Chat</span>
+                    <div className="chat-header__content">
+                        <span className="chat-header__content__title">Room Chat</span>
                     </div>
                 </div>
-                <div className="chat-messages">
+                <div className="chat-messages" ref={messagesEndRef}>
                     {chatMessages.map(t => (
                         t.type !== MessageType.Chat
                             ?
-                            <div className="chat-messages-misc">
+                            <div className="chat-messages__warning">
                                 <span>{t.msg}</span>
                             </div>
-                            : <>
-                                <div className={`chat-messages-wrapper ${t.username === userName ? 'message-out' : ''}`}>
-                                    <LeftCorner className={`message-corner ${t.username === userName ? 'corner-reverse' : ''}`} />
-                                    <div className={`message-content `}>
-                                        <span className={`message-title ${t.username === userName ? 'message-title-hide' : ''}`}>{t.username}</span>
-                                        <span>{t.msg}</span>
-                                    </div>
-                                </div>
-                            </>
+                            :
+                            <div className={`chat-messages__content ${t.username === userName ? 'out' : 'in'}`}>
+                                <span className={`title ${t.username === userName ? 'hide' : ''}`}>{t.username}</span>
+                                <span>{t.msg}</span>
+                            </div>
                     ))}
                 </div>
                 <div className="chat-input">
