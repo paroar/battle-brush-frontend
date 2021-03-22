@@ -16,7 +16,7 @@ const UserInfo = () => {
     if (room.roomtype == "Private") {
         return (
             <div className="share">
-                <input className="share__input" type="text" ref={roomClipboard} value={`http://localhost:3000/${room.roomid}`} />
+                <input className="share__input" type="text" ref={roomClipboard} value={`http://localhost/${room.roomid}`} />
                 <div className="share__btn" onClick={() => copyClipboard()}>
                     <FaCopy size={20} />
                 </div>
