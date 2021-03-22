@@ -100,6 +100,7 @@ const CanvasFrame = (props: Props) => {
             <CanvasDraw
                 className={`canvas-frame__canvas ${tool}`}
                 ref={canvasRef}
+                loadTimeOffset={2}
                 brushRadius={brushSize}
                 canvasWidth={864}
                 canvasHeight={540}
