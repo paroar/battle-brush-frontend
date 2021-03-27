@@ -27,10 +27,11 @@ const Home = () => {
                     <h1 className="home__title">what the f*** is that</h1>
                     <div id="home-svg" className="home__svg" />
                     <ChoiceRoom />
-                    <div className="home__contact">
-                        <span >Want to add your drawing to the front page? Contact me at <a href="">email</a></span>
+                    <div className="home__kofi">
+                        <a href="https://ko-fi.com/kamvas" target="_blank">
+                            <img src={kofi} alt="donation" />
+                        </a>
                     </div>
-                    <div className="home__kofi"><a href="https://ko-fi.com/kamvas" target="_blank"><img src={kofi} alt="donation" /></a></div>
                 </section>
             }
         </div>

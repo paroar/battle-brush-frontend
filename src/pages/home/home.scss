@@ -23,8 +23,6 @@
         min-width: 40rem;
         max-width: 120rem;
         width: 50%;
-        margin: 1rem;
-        min-height: 25rem;
     }
 
     &__contact {
@@ -34,6 +32,10 @@
         max-width: 20rem;
         margin: 2rem;
         color: $medium-grey;
+
+        &__icon {
+            color: #ff5e5b;
+        }
     }
 
     &__kofi {
