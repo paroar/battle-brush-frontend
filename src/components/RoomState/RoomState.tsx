@@ -24,7 +24,7 @@ const RoomState = () => {
 
     useEffect(() => {
         if (roomState == GameState.Recolecting) {
-            fetch("http://localhost:8085/img", {
+            fetch(`${process.env.REACT_APP_API_ENDPOINT}/img`, {
                 method: "POST",
                 body: JSON.stringify({
                     playerid: userID,
@@ -37,7 +37,7 @@ const RoomState = () => {
 
     useEffect(() => {
         if (roomState === GameState.RecolectingVotes) {
-            fetch("http://localhost:8085/vote", {
+            fetch(`${process.env.REACT_APP_API_ENDPOINT}/vote`, {
                 method: "POST",
                 body: JSON.stringify({
                     playerid: draw.userid,
@@ -75,7 +75,7 @@ const RoomState = () => {
             <>
                 <CanvasFrame isDisabled={false} handlerImg={handleImg} />
                 <Timer
-                    seconds={60}
+                    seconds={45}
                     color="#e56"
                     alpha={0.9}
                     size={70}

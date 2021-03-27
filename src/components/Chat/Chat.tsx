@@ -2,7 +2,6 @@ import { useContext, useState, useRef, useEffect } from "react"
 import { WSContext } from "../../contexts/websocket"
 import { MessageType } from "../../types/types"
 import { BsArrowBarLeft, BsArrowBarRight } from "react-icons/bs"
-import { ReactComponent as LeftCorner } from "../../assets/left-corner.svg"
 
 type Props = {
     handleChat: () => void
@@ -19,8 +18,8 @@ const Chat = (props: Props) => {
 
     const handleMessages = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const msgInput = msg.trim()
-        if (e.key == "Enter" && msgInput.length > 0) {
-            fetch("http://localhost:8085/chat", {
+        if (e.key === "Enter" && msgInput.length > 0) {
+            fetch(`${process.env.REACT_APP_API_ENDPOINT}/chat`, {
                 method: "POST",
                 body: JSON.stringify({
                     playerid: userID,
@@ -65,12 +64,12 @@ const Chat = (props: Props) => {
                     {chatMessages.map(t => (
                         t.type !== MessageType.Chat
                             ?
-                            <div className="chat-messages__warning">
+                            <div key={t.id} className="chat-messages__warning">
                                 <span>{t.msg}</span>
                             </div>
                             :
-                            <div className={`chat-messages__content ${t.username === userName ? 'out' : 'in'}`}>
-                                <span className={`title ${t.username === userName ? 'hide' : ''}`}>{t.username}</span>
+                            <div key={t.id} className={`chat-messages__content ${t.userid === userID ? 'out' : 'in'}`}>
+                                <span className={`title ${t.userid === userID ? 'hide' : ''}`}>{t.username}</span>
                                 <span>{t.msg}</span>
                             </div>
                     ))}

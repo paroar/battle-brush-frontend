@@ -13,10 +13,10 @@ const UserInfo = () => {
         document.execCommand('copy');
     }
 
-    if (room.roomtype == "Private") {
+    if (room.roomtype === "Private") {
         return (
             <div className="share">
-                <input className="share__input" type="text" ref={roomClipboard} value={`http://localhost/${room.roomid}`} />
+                <input className="share__input" type="text" ref={roomClipboard} value={`${process.env.REACT_APP_API_URI}/${room.roomid}`} readOnly/>
                 <div className="share__btn" onClick={() => copyClipboard()}>
                     <FaCopy size={20} />
                 </div>

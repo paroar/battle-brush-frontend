@@ -1,6 +1,8 @@
 export type MsgChat = {
+    id: string
     msg?: string
     username: string
+    userid: string
     type: number
 }
 
@@ -44,7 +46,7 @@ export enum RoomCommands {
 
 export type RoomCommand = {
     command: string
-	roomid:  string
+    roomid: string
 }
 
 //Message Content
@@ -54,16 +56,18 @@ export type Login = {
 }
 
 export type JoinLeave = {
+    id: string
     username: string
     userid: string
     msg: string
 }
 
 export type Chat = {
-    roomid:   string
-	playerid: string
-	username: string
-	msg:      string
+    id: string
+    roomid: string
+    userid: string
+    username: string
+    msg: string
 }
 
 export type Player = {

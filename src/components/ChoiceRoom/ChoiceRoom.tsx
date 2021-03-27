@@ -6,7 +6,7 @@ const ChoiceRoom = () => {
     const { userID, setRoom } = useContext(WSContext)
 
     const createOrJoinRoom = async () => {
-        const res = await fetch(`http://localhost:8085/public/${userID}`)
+        const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/public/${userID}`)
         if (res.ok) {
             const room = await res.json()
             setRoom({
@@ -17,7 +17,7 @@ const ChoiceRoom = () => {
     }
 
     const createRoom = async () => {
-        const res = await fetch(`http://localhost:8085/private/${userID}`)
+        const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/private/${userID}`)
         if (res.ok) {
             const room = await res.json()
             setRoom({

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MsgChat, MessageType, Message, Login, Chat, State, JoinLeave, ImageDrawing, Theme, GameState, Connection, Winner, Players } from '../types/types';
 
 const path = window.location.pathname
-let webSocket = new WebSocket(`ws://localhost:8085/ws${path !== "/" ? path : ""}`)
+let webSocket = new WebSocket(`${process.env.REACT_APP_API_WS}${path !== "/" ? path : ""}`)
 
 const WSContext = React.createContext({
     webSocket: {} as WebSocket,
@@ -55,10 +55,12 @@ const WSContextProvider: React.FC = (props) => {
                 break
             }
             case MessageType.JoinLeave: {
-                const { username, msg } = content as JoinLeave
+                const { id, username, userid, msg } = content as JoinLeave
                 const joinLeaveMsg: MsgChat = {
+                    id: id,
                     msg: msg,
                     username: username,
+                    userid: userid,
                     type: MessageType.JoinLeave
                 }
                 setChatMessages([
@@ -68,10 +70,12 @@ const WSContextProvider: React.FC = (props) => {
                 break
             }
             case MessageType.Chat: {
-                const { username, msg } = content as Chat
+                const { id, username, userid, msg } = content as Chat
                 const chatMsg: MsgChat = {
+                    id: id,
                     msg: msg,
                     username: username,
+                    userid: userid,
                     type: MessageType.Chat
                 }
                 setChatMessages([

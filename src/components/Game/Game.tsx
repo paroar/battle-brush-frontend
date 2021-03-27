@@ -17,7 +17,7 @@ const Game = (props: Props) => {
     const { className } = props
 
     const handleStart = async () => {
-        fetch(`http://localhost:8085/startgame/${room.roomid}`)
+        fetch(`${process.env.REACT_APP_API_ENDPOINT}/startgame/${room.roomid}`)
     }
 
     return (
