@@ -34,7 +34,7 @@ const PanelVote = (props: Props) => {
             <CanvasFrame isDisabled={true} drawImg={draw.img} />
             <div className="panel-vote">
                 {images.map(i => (
-                    <div onClick={() => handler(i.vote)}>
+                    <div key={i.vote} onClick={() => handler(i.vote)}>
                         <img className="panel-vote__img" alt={i.alt} src={i.src} />
                     </div>
                 ))}
