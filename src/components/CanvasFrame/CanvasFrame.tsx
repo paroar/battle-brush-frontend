@@ -48,9 +48,13 @@ const CanvasFrame = (props: Props) => {
     const canvasRef = useRef<CanvasDraw>(null)
 
     useEffect(() => {
-        if (canvasRef.current && drawImg) {
-            canvasRef.current.loadSaveData(drawImg)
+        const delay = setTimeout(() => {
+            if (canvasRef.current && drawImg) {
+                canvasRef.current.loadSaveData(drawImg)
+            }
         }
+            , 300);
+        return () => clearTimeout(delay)
     }, [drawImg])
 
     const handleClear = () => {
@@ -100,7 +104,7 @@ const CanvasFrame = (props: Props) => {
             <CanvasDraw
                 className={`canvas-frame__canvas ${tool}`}
                 ref={canvasRef}
-                loadTimeOffset={2}
+                loadTimeOffset={3}
                 brushRadius={brushSize}
                 canvasWidth={864}
                 canvasHeight={540}
